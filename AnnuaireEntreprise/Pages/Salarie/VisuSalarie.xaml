@@ -1,0 +1,74 @@
+﻿<Page x:Class="AnnuaireEntreprise.Pages.Salarie.VisuSalarie"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AnnuaireEntreprise.Pages.Salarie"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="1125"
+      Title="VisuSalarie">
+
+    <Grid RenderTransformOrigin="0.503,0.548" Margin="0,0,8,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="1.3*" />
+            <RowDefinition Height="10*" />
+
+        </Grid.RowDefinitions>
+
+        <!--Ligne 1-->
+        <Label Content="Nom :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        <TextBox x:Name="textBoxName" Grid.Column="1" HorizontalAlignment="Left" Margin="53,20,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" TextChanged="textBoxName_TextChanged"/>
+
+        <Label Content="Service :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="10,18,0,0"/>
+        <ComboBox x:Name="comboBoxService" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Width="145" Margin="68,18,0,0" DropDownClosed="comboBoxService_DropDownClosed"/>
+
+        <Label Content="Lieux :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" Margin="10,18,0,0"/>
+        <ComboBox x:Name="comboBoxSites" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" Width="156" Margin="58,18,0,0" DropDownClosed="comboBoxSites_DropDownClosed"/>
+
+
+        <!--Ligne 2-->
+        <!--//ToDo AJOUTER coloration une ligne sur deux-->
+        <DataGrid x:Name="dataGridEmployee" Grid.Row="2" Grid.ColumnSpan="5" Margin="20" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" AlternationCount="2" AlternatingRowBackground="LightGray">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="Nom" Binding="{Binding Path=LastName}"></DataGridTextColumn>
+                <DataGridTextColumn Width="2*" Header="Prénom" Binding="{Binding Path=FirstName}"></DataGridTextColumn>
+                <DataGridTextColumn Width="2*" Header="Téléphone fixe" Binding="{Binding Path=Phone}"></DataGridTextColumn>
+                <DataGridTextColumn Width="2*" Header="Téléphone portable" Binding="{Binding Path=MobilePhone}"></DataGridTextColumn>
+                <DataGridTextColumn Width="2*" Header="Adresse mail" Binding="{Binding Path=Mail}"></DataGridTextColumn>
+                <DataGridTextColumn Width="2*" Header="Services" Binding="{Binding Path=ServicesName}"></DataGridTextColumn>
+                <DataGridTextColumn Width="2*" Header="Lieux de travail" Binding="{Binding Path=SitesCity}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Modifier"  Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="ModifyEmployee" FontSize="14" Click="ModifyEmployee_Click">
+                                <Image Width="20" Height="20" Source="pack://application:,,,/Assets/Images/ModifyIcon.png" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Supprimer"  Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="DeleteEmployee" FontSize="14" Click="DeleteEmployee_Click">
+                                <Image Width="20" Height="20" Source="pack://application:,,,/Assets/Images/DeleteIcon.png"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+
+        </DataGrid>
+
+
+
+    </Grid>
+</Page>

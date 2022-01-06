@@ -1,0 +1,40 @@
+﻿<Window x:Class="AnnuaireEntreprise.Pages.Salarie.Choice.ChoiceSites"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AnnuaireEntreprise.Pages.Salarie.Choice"
+      mc:Ignorable="d"
+      Title="ChoiceSites" Height="500" Width="400" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4*" />
+
+        </Grid.RowDefinitions>
+
+        <Label Content="Nom du lieu :" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16"/>
+        <TextBox x:Name="textBoxSites" HorizontalAlignment="Left" Margin="143,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="230" FontSize="16" TextChanged="textBoxSites_TextChanged"/>
+        
+        <DataGrid x:Name="dataGridServices" Margin="10" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" AlternationCount="2" AlternatingRowBackground="LightGray">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="Nom du lieu de travail" Binding="{Binding Path=City}" FontSize="20"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Sélectionner"  Width="0.5*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="SelectService" FontSize="20" Click="SelectSites_Click">
+                                <Image Width="20" Height="20" Source="pack://application:,,,/Assets/Images/AddIcon.png" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+        
+    </Grid>
+</Window>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AnnuaireEntreprise.Context;
+using AnnuaireEntreprise.Pages.Salarie;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,18 @@ namespace AnnuaireEntreprise
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly AnnuaireContext _context;
+
+        public MainWindow(AnnuaireContext context)
         {
+            _context = context;
             InitializeComponent();
+
+        }
+
+        private void VisuSalarie_Click(object sender, RoutedEventArgs e)
+        {
+            Contents.Content = new VisuSalarie(_context);
         }
     }
 }
