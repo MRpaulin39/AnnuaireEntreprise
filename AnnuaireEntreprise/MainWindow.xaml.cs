@@ -29,11 +29,20 @@ namespace AnnuaireEntreprise
             _context = context;
             InitializeComponent();
 
+            Contents.Content = new VisuSalarie(_context);
+
         }
 
         private void VisuSalarie_Click(object sender, RoutedEventArgs e)
         {
             Contents.Content = new VisuSalarie(_context);
+        }
+
+        private void AddEmployee(object sender, RoutedEventArgs e)
+        {
+            var win = new AddSalarie(_context);
+            win.ShowDialog();
+            
         }
     }
 }

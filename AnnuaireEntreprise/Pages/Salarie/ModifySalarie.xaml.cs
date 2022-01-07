@@ -72,6 +72,10 @@ namespace AnnuaireEntreprise.Pages.Salarie
         //Valider les modifications
         private void buttonValider_Click(object sender, RoutedEventArgs e)
         {
+            //ToDo : Ajouter Regex + vérification
+            //Todo : Vérifier doublon
+            //Todo : Ajouter Max Length au TextBox
+
             if (textBoxFirstName.Text != "" && textBoxLastName.Text != "" && textBoxPhone.Text != "" && textBoxMobilePhone.Text != "" && textBoxMail.Text != "")
             {
                 var WriteServices = _context.Services.Single(se => se.Id == IdServiceSalarie);

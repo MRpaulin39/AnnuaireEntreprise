@@ -22,7 +22,7 @@
 
             <MenuItem  Header="Gestion des salariés"  FontSize="20" BorderBrush="Black" HorizontalAlignment="Left">
                 <MenuItem Name="VisuSalarie" Header="Visualisation" FontSize="18" Click="VisuSalarie_Click"></MenuItem>
-                <MenuItem Header="Ajout d'un employée"  FontSize="18"></MenuItem>
+                <MenuItem Header="Ajout d'un employée"  FontSize="18" Click="AddEmployee"></MenuItem>
             </MenuItem>
 
             <MenuItem Header="Gestion des services"  FontSize="20" BorderBrush="Black" HorizontalAlignment="Left">

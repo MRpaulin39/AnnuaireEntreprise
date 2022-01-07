@@ -24,7 +24,7 @@
         </Grid.RowDefinitions>
 
         <!--Ligne 1-->
-        <Label Content="Nom :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        <Label Content="Nom :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="6,18,0,0"/>
         <TextBox x:Name="textBoxName" Grid.Column="1" HorizontalAlignment="Left" Margin="53,20,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" TextChanged="textBoxName_TextChanged"/>
 
         <Label Content="Service :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="10,18,0,0"/>
