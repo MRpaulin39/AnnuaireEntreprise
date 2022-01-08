@@ -5,12 +5,17 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\Images\IconAnnuaire.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\Images\AddIcon.png" />
     <None Remove="Assets\Images\DeleteIcon.png" />
     <None Remove="Assets\Images\ModifyIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Images\IconAnnuaire.ico" />
   </ItemGroup>
 
   <ItemGroup>
