@@ -3,20 +3,10 @@ using AnnuaireEntreprise.Data.Models;
 using AnnuaireEntreprise.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AnnuaireEntreprise.Pages.Salarie
 {
@@ -45,7 +35,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
             //Remplit la liste des emplacements
             FillComboBoxVilles();
 
-            
+
             if (IsAuthentified)
             {
                 buttonAdd.Visibility = Visibility.Visible;
@@ -88,7 +78,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
                 .Where(e => e.FirstAndLastName.Contains(FiltreText))
                 .Where(e => e.ServicesName.Contains(FiltreServices))
                 .Where(e => e.SitesCity.Contains(FiltreSites))
-                .OrderBy(e=> e.LastName)
+                .OrderBy(e => e.LastName)
                 .ToList();
 
                 dataGridEmployee.ItemsSource = ListEmployeeBDD;
@@ -103,8 +93,8 @@ namespace AnnuaireEntreprise.Pages.Salarie
         //Permet de remplir le comboBox avec le nom des services
         public void FillComboBoxServices()
         {
-            try 
-            { 
+            try
+            {
                 var ListServices = _context.Services.ToList();
                 comboBoxService.Items.Add("");
 
@@ -120,13 +110,13 @@ namespace AnnuaireEntreprise.Pages.Salarie
             {
                 MessageBox.Show($"Une erreur est survenue lors de la récupération de la liste des services \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-}
+        }
 
         //Permet de remplir le comboBox avec le nom des différentes villes
         public void FillComboBoxVilles()
         {
-            try 
-            { 
+            try
+            {
                 var ListSites = _context.Sites.ToList();
                 comboBoxSites.Items.Add("");
 
@@ -185,7 +175,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
         {
             //Demander la confirmation de suppression
             var sender_context = sender as Button;
-            
+
             var context = sender_context!.DataContext as ReadEmployeeViewModels;
 
             var resultMsgBoxDelete = MessageBox.Show("Êtes-vous sûr de vouloir supprimer l'employée : '" + context!.FirstAndLastName + "' ?", "Confirmer la suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -204,7 +194,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
                     MessageBox.Show("Impossible de supprimer l'employée, il n'est pas présent dans la base de données", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
-            
+
         }
 
         //Permet d'afficher l'interface d'ajout d'un employé
