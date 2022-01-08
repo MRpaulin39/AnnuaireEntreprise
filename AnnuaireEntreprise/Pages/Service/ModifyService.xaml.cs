@@ -38,7 +38,6 @@ namespace AnnuaireEntreprise.Pages.Service
         //Mise à jour du service
         private void buttonValid_Click(object sender, RoutedEventArgs e)
         {
-            
             //Vérification doublon
             if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0)
             {
@@ -71,11 +70,9 @@ namespace AnnuaireEntreprise.Pages.Service
                     MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
-            
-            
         }
 
+        //Bouton d'annulation des modifications
         private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

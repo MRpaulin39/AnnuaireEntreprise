@@ -39,7 +39,7 @@ namespace AnnuaireEntreprise.Pages.Service
 
         }
 
-        //Remplissage de la BDD
+        //Actualisation de la liste des services
         public void FillDataGrid()
         {
             try
@@ -57,10 +57,11 @@ namespace AnnuaireEntreprise.Pages.Service
             }
         }
 
+        //Bouton pour afficher l'interface de modification
         private void ModifyService_Click(object sender, RoutedEventArgs e)
         {
             //Affichage d'une form avec la possibilité de modifier l'employée
-            var sender_context = sender as System.Windows.Controls.Button;
+            var sender_context = sender as Button;
             var context = sender_context!.DataContext as Services;
 
             var win = new ModifyService(_context, context.Id, context.Name);
@@ -69,10 +70,14 @@ namespace AnnuaireEntreprise.Pages.Service
             {
                 FillDataGrid();                
             }
+            else
+            {
+                MessageBox.Show("La modification a été annulé", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
         }
 
-        //Suppression d'un employée
+        //Suppression d'un service
         private void DeleteService_Click(object sender, RoutedEventArgs e)
         {
             //Demander la confirmation de suppression
@@ -80,14 +85,20 @@ namespace AnnuaireEntreprise.Pages.Service
             
             var context = sender_context!.DataContext as Services;
 
-            //Ajouter la vérification si service attribué
             var resultMsgBoxDelete = MessageBox.Show("Êtes-vous sûr de vouloir supprimer le service : '" + context!.Name + "' ?", "Confirmer la suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (resultMsgBoxDelete == MessageBoxResult.Yes)
             {
                 try 
                 {
+                    //Récupération du nombre d'attribution du service à un employé
+                    int NbAttribution = _context.Employees.Count(e => e.Services.Id == context.Id);
+
                     var serviceSelected = _context.Services.Single(s => s.Id == context.Id);
-                    if (serviceSelected != null)
+                    if (NbAttribution > 0)
+                    {
+                        MessageBox.Show("Impossible de supprimer le service, il est attribué à " + NbAttribution + " employé(s) !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else if (serviceSelected != null && NbAttribution == 0)
                     {
                         _context.Remove(serviceSelected);
                         _context.SaveChanges();
@@ -107,12 +118,14 @@ namespace AnnuaireEntreprise.Pages.Service
             
         }
 
+        //Application du filtre
         private void textBoxName_TextChanged(object sender, TextChangedEventArgs e)
         {
             FiltreText = textBoxService.Text;
             FillDataGrid();
         }
 
+        //Affichage de l'interface d'ajout d'un service
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             var win = new AddService(_context);
@@ -120,6 +133,10 @@ namespace AnnuaireEntreprise.Pages.Service
             if (result == true)
             {
                 FillDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("L'ajout a été annulé", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

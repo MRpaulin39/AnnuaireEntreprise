@@ -73,10 +73,11 @@ namespace AnnuaireEntreprise.Pages.Salarie
         //Valider les modifications
         private void buttonValider_Click(object sender, RoutedEventArgs e)
         {
-            //ToDo : Ajouter Regex + vérification
-            //Todo : Vérifier doublon
-            //Todo : Ajouter Max Length au TextBox
             bool CheckDoublon = true;
+            bool CheckMail = true;
+            bool CheckPhone = true;
+            bool CheckMobilePhone = true;
+
             //Vérification doublon
             if (_context.Employees.Where(e => e.Mail == textBoxMail.Text).Count() > 0)
             {
@@ -87,7 +88,26 @@ namespace AnnuaireEntreprise.Pages.Salarie
                 }
             }
 
-            if (CheckDoublon)
+            //Vérification mail
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(textBoxMail.Text);
+                textBoxMail.Text = addr.Address;
+                CheckMail = true;
+            }
+            catch
+            {
+                CheckMail = false;
+                MessageBox.Show("L'adresse email entrée (" + textBoxMail.Text + ") est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            //Vérification du regex numérique
+            Regex regex = new Regex("[^0-9]+");
+            CheckPhone = regex.IsMatch(textBoxPhone.Text);
+            CheckMobilePhone = regex.IsMatch(textBoxMobilePhone.Text);
+
+            //Vérification des differents paramètres
+            if (CheckDoublon && CheckMail && CheckPhone && CheckMobilePhone)
             {
                 if (textBoxFirstName.Text != "" && textBoxLastName.Text != "" && textBoxPhone.Text != "" && textBoxMobilePhone.Text != "" && textBoxMail.Text != "")
                 {
@@ -124,8 +144,14 @@ namespace AnnuaireEntreprise.Pages.Salarie
                     MessageBox.Show("Veuillez remplir tous les champs !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
-            
+            else if (CheckPhone == false)
+            {
+                MessageBox.Show("Le numéro de téléphone est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if (CheckMobilePhone == false)
+            {
+                MessageBox.Show("Le numéro de téléphone portable est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         //Annuler les modifications
@@ -134,6 +160,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
             DialogResult = false;
         }
 
+        //Fonction regex pour vérifier que la textbox est bien numérique
         private void TextRegexNumeriqueSeulement(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

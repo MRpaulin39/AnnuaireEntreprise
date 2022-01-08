@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!--Ligne 0-->
-        <TextBox x:Name="textBoxNameService" HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="2" FontSize="20" MaxLength="30"/>
+        <TextBox x:Name="textBoxNameService" HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="2" FontSize="20" MaxLength="30" KeyDown="textBoxNameService_KeyDown"/>
         <Label x:Name="label" Content="Nom du service :" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.ColumnSpan="2" Width="162"/>
 
         <!--Ligne 1-->

@@ -26,16 +26,4 @@ namespace AnnuaireEntreprise.ViewModels
         public string FirstAndLastName { get; set; }
     }
 
-    public class WriteEmployeeViewModels
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Phone { get; set; }
-        public string MobilePhone { get; set; }
-        public string Mail { get; set; }
-
-        //Clés étrangères
-        public int ServicesId { get; set; }
-        public int SitesId { get; set; }
-    }
 }

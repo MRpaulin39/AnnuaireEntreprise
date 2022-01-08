@@ -28,12 +28,34 @@ namespace AnnuaireEntreprise.Pages.Service
         {
             _context = context;
             InitializeComponent();
+
+            textBoxNameService.Focus();
         }
 
-        //Mise à jour du service
+        //Bouton d'ajout de service
         private void buttonValid_Click(object sender, RoutedEventArgs e)
         {
-            
+            AddAService();
+        }
+
+        //Bouton d'annulation
+        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        //Lors de la pression de la touche entrée, on lance la fonction d'ajout
+        private void textBoxNameService_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                AddAService();
+            }
+        }
+
+        //Fonction d'ajout de service
+        public void AddAService()
+        {
             //Vérification doublon
             if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0)
             {
@@ -67,11 +89,6 @@ namespace AnnuaireEntreprise.Pages.Service
                     MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
-
-        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
         }
     }
 }

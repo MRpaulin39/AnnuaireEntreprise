@@ -54,7 +54,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
             }
         }
 
-        //Remplissage de la BDD
+        //Actualisation de la liste des employées
         public void FillDataGrid()
         {
             try
@@ -88,6 +88,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
                 .Where(e => e.FirstAndLastName.Contains(FiltreText))
                 .Where(e => e.ServicesName.Contains(FiltreServices))
                 .Where(e => e.SitesCity.Contains(FiltreSites))
+                .OrderBy(e=> e.LastName)
                 .ToList();
 
                 dataGridEmployee.ItemsSource = ListEmployeeBDD;
@@ -149,7 +150,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
             FillDataGrid();
         }
 
-        //Définition du filtre service
+        //Définition du filtre nom du service
         private void comboBoxService_DropDownClosed(object sender, EventArgs e)
         {
             FiltreServices = comboBoxService.Text;
@@ -163,6 +164,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
             FillDataGrid();
         }
 
+        //Permet d'afficher la fonction de modification
         private void ModifyEmployee_Click(object sender, RoutedEventArgs e)
         {
             //Affichage d'une form avec la possibilité de modifier l'employée
@@ -205,6 +207,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
             
         }
 
+        //Permet d'afficher l'interface d'ajout d'un employé
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             var win = new AddSalarie(_context);

@@ -39,7 +39,7 @@ namespace AnnuaireEntreprise.Pages.Site
 
         }
 
-        //Remplissage de la BDD
+        //Affichage de la liste des lieux de travail
         public void FillDataGrid()
         {
             var ListServicesBDD = _context.Sites
@@ -49,6 +49,7 @@ namespace AnnuaireEntreprise.Pages.Site
             dataGridSite.ItemsSource = ListServicesBDD;
         }
 
+        //Affichage l'interface de modification
         private void ModifySite_Click(object sender, RoutedEventArgs e)
         {
             //Affichage d'une form avec la possibilité de modifier l'employée
@@ -64,7 +65,7 @@ namespace AnnuaireEntreprise.Pages.Site
 
         }
 
-        //Suppression d'un employée
+        //Suppression d'un lieu de travail
         private void DeleteSite_Click(object sender, RoutedEventArgs e)
         {
             //Demander la confirmation de suppression
@@ -77,9 +78,17 @@ namespace AnnuaireEntreprise.Pages.Site
             if (resultMsgBoxDelete == MessageBoxResult.Yes)
             {
                 try
-                { 
+                {
+                    //Récupération du nombre d'attribution du service à un employé
+                    int NbAttribution = _context.Employees.Count(e => e.Sites.Id == context.Id);
+
                     var siteSelected = _context.Sites.Single(si => si.Id == context.Id);
-                    if (siteSelected != null)
+
+                    if (NbAttribution > 0)
+                    {
+                        MessageBox.Show("Impossible de supprimer le lieu de travail, il est attribué à " + NbAttribution + " employé(s) !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else if (siteSelected != null && NbAttribution == 0)
                     {
                         _context.Remove(siteSelected);
                         _context.SaveChanges();
@@ -88,7 +97,7 @@ namespace AnnuaireEntreprise.Pages.Site
                     }
                     else
                     {
-                        MessageBox.Show("Impossible de supprimer le service, il n'est pas présent dans la base de données", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Impossible de supprimer le lieu de travail, il n'est pas présent dans la base de données", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch (Exception ex)
@@ -99,12 +108,14 @@ namespace AnnuaireEntreprise.Pages.Site
             
         }
 
+        //Application du filtre
         private void textBoxName_TextChanged(object sender, TextChangedEventArgs e)
         {
             FiltreText = textBoxSite.Text;
             FillDataGrid();
         }
 
+        //Affichage de l'interface d'ajout du site
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             var win = new AddSite(_context);

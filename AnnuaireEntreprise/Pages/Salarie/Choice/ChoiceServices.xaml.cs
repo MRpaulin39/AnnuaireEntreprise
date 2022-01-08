@@ -39,6 +39,7 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
             
         }
 
+        //Validation du service sélectionné
         private void SelectService_Click(object sender, RoutedEventArgs e)
         {
             var sender_context = sender as Button;
@@ -50,12 +51,14 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
             DialogResult = true;
         }
 
+        //Fonction de filtre
         private void textBoxServices_TextChanged(object sender, TextChangedEventArgs e)
         {
             FiltreText = textBoxServices.Text;
             FillDataGrid();
         }
 
+        //Actualisation de la liste des services
         public void FillDataGrid()
         {
             try 

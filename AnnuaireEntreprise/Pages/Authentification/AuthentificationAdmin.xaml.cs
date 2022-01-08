@@ -26,16 +26,19 @@ namespace AnnuaireEntreprise.Pages.Authentification
             textBoxUsername.Focus();
         }
 
+        //Fermer l'interface d'authentification
         private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
         }
 
+        //Bouton permettant la vérification du mot de passe
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
             CheckPassword();
         }
 
+        //Lors de pression de la touche entrée, vérification du mot de passe
         private void textBoxPassword_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -44,6 +47,7 @@ namespace AnnuaireEntreprise.Pages.Authentification
             }
         }
 
+        //Fontion permettant la vérification du mot de passe
         private void CheckPassword()
         {
             if (textBoxUsername.Text == "Admin" && textBoxPassword.Password == "Admin")

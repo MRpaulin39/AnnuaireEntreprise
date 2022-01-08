@@ -28,12 +28,13 @@ namespace AnnuaireEntreprise.Pages.Site
         {
             _context = context;
             InitializeComponent();
+
+            textBoxNameSite.Focus();
         }
 
-        //Mise à jour du site
+        //Bouton d'ajout d'un site
         private void buttonValid_Click(object sender, RoutedEventArgs e)
         {
-            
             //Vérification doublon
             if (_context.Sites.Where(si => si.City == textBoxNameSite.Text).Count() > 0)
             {
@@ -66,11 +67,9 @@ namespace AnnuaireEntreprise.Pages.Site
                     MessageBox.Show("Veuillez remplir le nom de la ville !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
-            
-            
         }
 
+        //Bouton d'annulation de l'ajout d'un site
         private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

@@ -67,13 +67,14 @@ namespace AnnuaireEntreprise.Pages.Site
                 }
                 else
                 {
-                    MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Veuillez remplir le nom de la ville !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             
             
         }
 
+        //Bouton d'annulation de la modificaiton du site
         private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

@@ -35,6 +35,7 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
             
         }
 
+        //Validation du lieu de travail sélectionné
         private void SelectSites_Click(object sender, RoutedEventArgs e)
         {
             var sender_context = sender as Button;
@@ -46,11 +47,13 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
             DialogResult = true;
         }
 
+        //Permettant le filtre
         private void textBoxSites_TextChanged(object sender, TextChangedEventArgs e)
         {
             FillDataGrid();
         }
 
+        //Actualisation de la liste des lieux de travail
         public void FillDataGrid()
         {
             try
