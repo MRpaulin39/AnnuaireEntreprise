@@ -1,0 +1,62 @@
+﻿<Page x:Class="AnnuaireEntreprise.Pages.Site.VisuSite"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AnnuaireEntreprise.Pages.Site"
+      mc:Ignorable="d" 
+      d:DesignHeight="665" d:DesignWidth="1452"
+      Title="VisuServices">
+
+    <Grid RenderTransformOrigin="0.503,0.548" Margin="0,0,8,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="10*" />
+
+        </Grid.RowDefinitions>
+
+        <!--Ligne 1-->
+        <Label Content="Ville :" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="0,13,0,0" FontSize="20" Width="268"/>
+        <TextBox x:Name="textBoxSite" Grid.Column="2" HorizontalAlignment="Center" Margin="0,55,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="268" TextChanged="textBoxName_TextChanged" FontSize="20"/>
+        <Button x:Name="buttonAdd" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,20,10" Grid.Row="1" VerticalAlignment="Top" Padding="5" RenderTransformOrigin="0.79,0.475" Click="buttonAdd_Click">
+            <Image Width="60" Height="60" Source="pack://application:,,,/Assets/Images/AddIcon.png"/>
+        </Button>
+
+        <!--Ligne 2-->
+        <DataGrid x:Name="dataGridSite" Grid.Row="2" Grid.ColumnSpan="5" Margin="20" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" AlternationCount="2" AlternatingRowBackground="LightGray" FontSize="20">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="8*" Header="Nom de la ville" Binding="{Binding Path=City}"></DataGridTextColumn>
+
+                <DataGridTemplateColumn Header="Modifier"  Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="ModifyService" FontSize="14" Click="ModifySite_Click">
+                                <Image Width="20" Height="20" Source="pack://application:,,,/Assets/Images/ModifyIcon.png" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Supprimer"  Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="DeleteService" FontSize="14" Click="DeleteSite_Click">
+                                <Image Width="20" Height="20" Source="pack://application:,,,/Assets/Images/DeleteIcon.png"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+
+        </DataGrid>
+
+    </Grid>
+</Page>

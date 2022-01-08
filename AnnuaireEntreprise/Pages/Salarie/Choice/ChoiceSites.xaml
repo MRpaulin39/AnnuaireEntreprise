@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AnnuaireEntreprise.Pages.Salarie.Choice"
       mc:Ignorable="d"
-      Title="ChoiceSites" Height="500" Width="400" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+      Title="Choix du lieu" Height="500" Width="450" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,13 +17,13 @@
 
         </Grid.RowDefinitions>
 
-        <Label Content="Nom du lieu :" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16"/>
-        <TextBox x:Name="textBoxSites" HorizontalAlignment="Left" Margin="143,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="230" FontSize="16" TextChanged="textBoxSites_TextChanged"/>
-        
-        <DataGrid x:Name="dataGridServices" Margin="10" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" AlternationCount="2" AlternatingRowBackground="LightGray">
+        <Label Content="Nom du lieu :" HorizontalAlignment="Left" Margin="45,0,0,0" VerticalAlignment="Center" FontSize="20"/>
+        <TextBox x:Name="textBoxSites" HorizontalAlignment="Left" Margin="179,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="230" FontSize="20" TextChanged="textBoxSites_TextChanged"/>
+
+        <DataGrid x:Name="dataGridServices" Margin="10" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" AlternationCount="2" AlternatingRowBackground="LightGray" FontSize="20">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="2*" Header="Nom du lieu de travail" Binding="{Binding Path=City}" FontSize="20"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="Sélectionner"  Width="0.5*">
+                <DataGridTemplateColumn Header="Sélectionner"  Width="1*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Name="SelectService" FontSize="20" Click="SelectSites_Click">
@@ -35,6 +35,6 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        
+
     </Grid>
 </Window>

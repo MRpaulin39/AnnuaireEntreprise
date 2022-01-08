@@ -69,43 +69,49 @@ namespace AnnuaireEntreprise.Pages.Salarie
             {
                 bool CheckDoublon = true;
                 //Vérification doublon
-                if(_context.Employees.Where(e => e.Mail == textBoxMail.Text).Count() > 0)
+                if (_context.Employees.Where(e => e.Mail == textBoxMail.Text).Count() > 0)
                 {
                     var result = MessageBox.Show($"L'adresse email entrée ({textBoxMail.Text}) est déjà présente dans la base de données\nÊtes-vous sur de vouloir continuer ?", "Doublon", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (result != MessageBoxResult.Yes)
                     {
                         CheckDoublon = false;
                     }
-                } 
+                }
 
 
                 if (CheckDoublon)
                 {
-                    var WriteServices = _context.Services.Single(se => se.Id == IdServiceSalarie);
-                    var WriteSites = _context.Sites.Single(si => si.Id == IdSitesSalarie);
+                    try
+                    {
+                        var WriteServices = _context.Services.Single(se => se.Id == IdServiceSalarie);
+                        var WriteSites = _context.Sites.Single(si => si.Id == IdSitesSalarie);
 
-                    Employee WriteSalarie = new Employee();
+                        Employee WriteSalarie = new Employee();
 
-                    WriteSalarie.FirstName = textBoxFirstName.Text;
-                    WriteSalarie.LastName = textBoxLastName.Text;
-                    WriteSalarie.Phone = textBoxPhone.Text;
-                    WriteSalarie.MobilePhone = textBoxMobilePhone.Text;
-                    WriteSalarie.Mail = textBoxMail.Text;
-                    WriteSalarie.Services = WriteServices;
-                    WriteSalarie.Sites = WriteSites;
+                        WriteSalarie.FirstName = textBoxFirstName.Text;
+                        WriteSalarie.LastName = textBoxLastName.Text;
+                        WriteSalarie.Phone = textBoxPhone.Text;
+                        WriteSalarie.MobilePhone = textBoxMobilePhone.Text;
+                        WriteSalarie.Mail = textBoxMail.Text;
+                        WriteSalarie.Services = WriteServices;
+                        WriteSalarie.Sites = WriteSites;
 
-                    _context.Employees.Add(WriteSalarie);
-                    _context.SaveChanges();
+                        _context.Employees.Add(WriteSalarie);
+                        _context.SaveChanges();
 
-                    MessageBox.Show("Ajout enregistré", "Ajout", MessageBoxButton.OK, MessageBoxImage.Information);
-                    DialogResult = true;
+                        MessageBox.Show("Ajout enregistré", "Ajout", MessageBoxButton.OK, MessageBoxImage.Information);
+                        DialogResult = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Une erreur est survenue lors de l'ajout de l'employé \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
                 }
                 else
                 {
                     MessageBox.Show("Annulation de l'ajout", "Annulation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                
-
                 
             }
             else

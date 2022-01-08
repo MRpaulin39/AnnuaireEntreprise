@@ -31,7 +31,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
         string FiltreServices = "";
         string FiltreSites = "";
 
-        public VisuSalarie(AnnuaireContext context)
+        public VisuSalarie(AnnuaireContext context, bool IsAuthentified)
         {
             _context = context;
             InitializeComponent();
@@ -44,12 +44,22 @@ namespace AnnuaireEntreprise.Pages.Salarie
 
             //Remplit la liste des emplacements
             FillComboBoxVilles();
+
+            
+            if (IsAuthentified)
+            {
+                buttonAdd.Visibility = Visibility.Visible;
+                DataGridColumnModifier.Visibility = Visibility.Visible;
+                DataGridColumnDelete.Visibility = Visibility.Visible;
+            }
         }
 
         //Remplissage de la BDD
         public void FillDataGrid()
         {
-            var ListEmployeeBDD = _context.Employees
+            try
+            {
+                var ListEmployeeBDD = _context.Employees
                 .Join(
                     _context.Services,
                     Employee => Employee.Services.Id,
@@ -80,35 +90,56 @@ namespace AnnuaireEntreprise.Pages.Salarie
                 .Where(e => e.SitesCity.Contains(FiltreSites))
                 .ToList();
 
-            dataGridEmployee.ItemsSource = ListEmployeeBDD;
+                dataGridEmployee.ItemsSource = ListEmployeeBDD;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Une erreur est survenue lors de la récupération de la liste des employées \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         //Permet de remplir le comboBox avec le nom des services
         public void FillComboBoxServices()
         {
-            var ListServices = _context.Services.ToList();
-            comboBoxService.Items.Add("");
+            try 
+            { 
+                var ListServices = _context.Services.ToList();
+                comboBoxService.Items.Add("");
 
-            foreach (Services services in ListServices)
-            {
-                comboBoxService.Items.Add(services.Name);
+                foreach (Services services in ListServices)
+                {
+                    comboBoxService.Items.Add(services.Name);
+                }
+
+                comboBoxService.SelectedIndex = 0;
+
             }
-
-            comboBoxService.SelectedIndex = 0;
-        }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Une erreur est survenue lors de la récupération de la liste des services \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+}
 
         //Permet de remplir le comboBox avec le nom des différentes villes
         public void FillComboBoxVilles()
         {
-            var ListSites = _context.Sites.ToList();
-            comboBoxSites.Items.Add("");
+            try 
+            { 
+                var ListSites = _context.Sites.ToList();
+                comboBoxSites.Items.Add("");
 
-            foreach (Sites sites in ListSites)
-            {
-                comboBoxSites.Items.Add(sites.City);
+                foreach (Sites sites in ListSites)
+                {
+                    comboBoxSites.Items.Add(sites.City);
+                }
+
+                comboBoxSites.SelectedIndex = 0;
             }
-
-            comboBoxSites.SelectedIndex = 0;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Une erreur est survenue lors de la récupération de la liste des villes \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         //Définition du filtre Nom et prénom
@@ -172,6 +203,16 @@ namespace AnnuaireEntreprise.Pages.Salarie
                 }
             }
             
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var win = new AddSalarie(_context);
+            var result = win.ShowDialog();
+            if (result == true)
+            {
+                FillDataGrid();
+            }
         }
     }
 }

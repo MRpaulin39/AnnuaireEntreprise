@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AnnuaireEntreprise.Pages.Salarie"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="1125"
+      d:DesignHeight="665" d:DesignWidth="1452"
       Title="VisuSalarie">
 
     <Grid RenderTransformOrigin="0.503,0.548" Margin="0,0,8,-6">
@@ -18,34 +18,36 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*" />
-            <RowDefinition Height="1.3*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="10*" />
 
         </Grid.RowDefinitions>
 
         <!--Ligne 1-->
-        <Label Content="Nom :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="6,18,0,0"/>
-        <TextBox x:Name="textBoxName" Grid.Column="1" HorizontalAlignment="Left" Margin="53,20,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" TextChanged="textBoxName_TextChanged"/>
+        <Label Content="Nom :" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Margin="0,19,0,0" FontSize="20" Grid.Column="1" Width="268"/>
+        <TextBox x:Name="textBoxName" Grid.Column="1" HorizontalAlignment="Center" Margin="0,61,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="269" TextChanged="textBoxName_TextChanged" FontSize="20"/>
 
-        <Label Content="Service :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="10,18,0,0"/>
-        <ComboBox x:Name="comboBoxService" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Width="145" Margin="68,18,0,0" DropDownClosed="comboBoxService_DropDownClosed"/>
+        <Label Content="Service :" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="0,17,0,0" FontSize="20" Width="268"/>
+        <ComboBox x:Name="comboBoxService" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Width="268" Margin="0,59,0,0" DropDownClosed="comboBoxService_DropDownClosed" FontSize="20"/>
 
-        <Label Content="Lieux :" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" Margin="10,18,0,0"/>
-        <ComboBox x:Name="comboBoxSites" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" Width="156" Margin="58,18,0,0" DropDownClosed="comboBoxSites_DropDownClosed"/>
+        <Label Content="Lieux :" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" Margin="0,17,0,0" FontSize="20" Width="268"/>
+        <ComboBox x:Name="comboBoxSites" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" Width="269" Margin="0,59,0,0" DropDownClosed="comboBoxSites_DropDownClosed" FontSize="20"/>
 
+        <Button x:Name="buttonAdd" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,20,10" Grid.Row="1" VerticalAlignment="Top" Padding="5" RenderTransformOrigin="0.79,0.475" Click="buttonAdd_Click" Visibility="Hidden">
+            <Image Width="60" Height="60" Source="pack://application:,,,/Assets/Images/AddIcon.png"/>
+        </Button>
 
         <!--Ligne 2-->
-        <!--//ToDo AJOUTER coloration une ligne sur deux-->
-        <DataGrid x:Name="dataGridEmployee" Grid.Row="2" Grid.ColumnSpan="5" Margin="20" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" AlternationCount="2" AlternatingRowBackground="LightGray">
+        <DataGrid x:Name="dataGridEmployee" Grid.Row="2" Grid.ColumnSpan="5" Margin="20" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" AlternationCount="2" AlternatingRowBackground="LightGray" FontSize="20">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="2*" Header="Nom" Binding="{Binding Path=LastName}"></DataGridTextColumn>
-                <DataGridTextColumn Width="2*" Header="Prénom" Binding="{Binding Path=FirstName}"></DataGridTextColumn>
-                <DataGridTextColumn Width="2*" Header="Téléphone fixe" Binding="{Binding Path=Phone}"></DataGridTextColumn>
-                <DataGridTextColumn Width="2*" Header="Téléphone portable" Binding="{Binding Path=MobilePhone}"></DataGridTextColumn>
+                <DataGridTextColumn Width="1.5*" Header="Nom" Binding="{Binding Path=LastName}"></DataGridTextColumn>
+                <DataGridTextColumn Width="1.5*" Header="Prénom" Binding="{Binding Path=FirstName}"></DataGridTextColumn>
+                <DataGridTextColumn Width="1.3*" Header="Téléphone fixe" Binding="{Binding Path=Phone}"></DataGridTextColumn>
+                <DataGridTextColumn Width="1.4*" Header="Téléphone portable" Binding="{Binding Path=MobilePhone}"></DataGridTextColumn>
                 <DataGridTextColumn Width="2*" Header="Adresse mail" Binding="{Binding Path=Mail}"></DataGridTextColumn>
-                <DataGridTextColumn Width="2*" Header="Services" Binding="{Binding Path=ServicesName}"></DataGridTextColumn>
-                <DataGridTextColumn Width="2*" Header="Lieux de travail" Binding="{Binding Path=SitesCity}"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="Modifier"  Width="1*">
+                <DataGridTextColumn Width="1.5*" Header="Services" Binding="{Binding Path=ServicesName}"></DataGridTextColumn>
+                <DataGridTextColumn Width="1*" Header="Lieu" Binding="{Binding Path=SitesCity}"></DataGridTextColumn>
+                <DataGridTemplateColumn x:Name="DataGridColumnModifier" Header="Modifier"  Width="1*" Visibility="Hidden">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Name="ModifyEmployee" FontSize="14" Click="ModifyEmployee_Click">
@@ -54,7 +56,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Supprimer"  Width="1*">
+                <DataGridTemplateColumn x:Name="DataGridColumnDelete" Header="Supprimer"  Width="1*" Visibility="Hidden">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="DeleteEmployee" FontSize="14" Click="DeleteEmployee_Click">

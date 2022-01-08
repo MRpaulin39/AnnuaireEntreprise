@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -75,39 +76,68 @@ namespace AnnuaireEntreprise.Pages.Salarie
             //ToDo : Ajouter Regex + vérification
             //Todo : Vérifier doublon
             //Todo : Ajouter Max Length au TextBox
-
-            if (textBoxFirstName.Text != "" && textBoxLastName.Text != "" && textBoxPhone.Text != "" && textBoxMobilePhone.Text != "" && textBoxMail.Text != "")
+            bool CheckDoublon = true;
+            //Vérification doublon
+            if (_context.Employees.Where(e => e.Mail == textBoxMail.Text).Count() > 0)
             {
-                var WriteServices = _context.Services.Single(se => se.Id == IdServiceSalarie);
-                var WriteSites = _context.Sites.Single(si => si.Id == IdSitesSalarie);
-
-                var WriteSalarie = _context.Employees.Single(e => e.Id == IdSalarie);
-
-                WriteSalarie.Id = IdSalarie;
-                WriteSalarie.FirstName = textBoxFirstName.Text;
-                WriteSalarie.LastName = textBoxLastName.Text;
-                WriteSalarie.Phone = textBoxPhone.Text;
-                WriteSalarie.MobilePhone = textBoxMobilePhone.Text;
-                WriteSalarie.Mail = textBoxMail.Text;
-                WriteSalarie.Services = WriteServices;
-                WriteSalarie.Sites = WriteSites;
-
-                _context.Entry(WriteSalarie).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                _context.SaveChanges();
-
-                MessageBox.Show("Modification enregistrée", "Modification", MessageBoxButton.OK, MessageBoxImage.Information);
-                DialogResult = true;
+                var result = MessageBox.Show($"L'adresse email entrée ({textBoxMail.Text}) est déjà présente dans la base de données\nÊtes-vous sur de vouloir continuer ?", "Doublon", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result != MessageBoxResult.Yes)
+                {
+                    CheckDoublon = false;
+                }
             }
-            else
+
+            if (CheckDoublon)
             {
-                MessageBox.Show("Veuillez remplir tous les champs !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (textBoxFirstName.Text != "" && textBoxLastName.Text != "" && textBoxPhone.Text != "" && textBoxMobilePhone.Text != "" && textBoxMail.Text != "")
+                {
+                    try
+                    {
+                        var WriteServices = _context.Services.Single(se => se.Id == IdServiceSalarie);
+                        var WriteSites = _context.Sites.Single(si => si.Id == IdSitesSalarie);
+
+                        var WriteSalarie = _context.Employees.Single(e => e.Id == IdSalarie);
+
+                        WriteSalarie.Id = IdSalarie;
+                        WriteSalarie.FirstName = textBoxFirstName.Text;
+                        WriteSalarie.LastName = textBoxLastName.Text;
+                        WriteSalarie.Phone = textBoxPhone.Text;
+                        WriteSalarie.MobilePhone = textBoxMobilePhone.Text;
+                        WriteSalarie.Mail = textBoxMail.Text;
+                        WriteSalarie.Services = WriteServices;
+                        WriteSalarie.Sites = WriteSites;
+
+                        _context.Entry(WriteSalarie).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        _context.SaveChanges();
+
+                        MessageBox.Show("Modification enregistrée", "Modification", MessageBoxButton.OK, MessageBoxImage.Information);
+                        DialogResult = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Une erreur est survenue lors de la modification du salarié \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez remplir tous les champs !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+
+            
         }
 
         //Annuler les modifications
         private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        private void TextRegexNumeriqueSeulement(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

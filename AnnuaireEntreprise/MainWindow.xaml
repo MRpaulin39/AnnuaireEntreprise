@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnnuaireEntreprise"
         mc:Ignorable="d"
-        Title="Annuaire entreprise" MinHeight="800" MinWidth="1500" WindowState="Maximized">
+        Title="Annuaire entreprise" MinHeight="800" MinWidth="1500" WindowState="Maximized" KeyDown="Window_KeyDown">
     <Grid RenderTransformOrigin="0.503,0.548" Margin="0,0,8,-6">
         <Grid.ColumnDefinitions>
-        
+
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
@@ -18,21 +18,15 @@
 
         </Grid.RowDefinitions>
 
-        <Menu  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <Menu Name="MainMenu" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20">
 
-            <MenuItem  Header="Gestion des salariés"  FontSize="20" BorderBrush="Black" HorizontalAlignment="Left">
-                <MenuItem Name="VisuSalarie" Header="Visualisation" FontSize="18" Click="VisuSalarie_Click"></MenuItem>
-                <MenuItem Header="Ajout d'un employée"  FontSize="18" Click="AddEmployee"></MenuItem>
+            <MenuItem  Header="Gestion des salariés" BorderBrush="Black" HorizontalAlignment="Left" Click="VisuSalarie">
             </MenuItem>
 
-            <MenuItem Header="Gestion des services"  FontSize="20" BorderBrush="Black" HorizontalAlignment="Left">
-                <MenuItem Header="Visualisation" FontSize="18"/>
-                <MenuItem Header="Ajout d'un service" FontSize="18"/>
+            <MenuItem Header="Gestion des services" BorderBrush="Black" HorizontalAlignment="Left" Click="VisuServices">
             </MenuItem>
-            
-            <MenuItem Header="Gestion des sites" FontSize="20" BorderBrush="Black"  HorizontalAlignment="Left">
-                <MenuItem Header="Visualisation" FontSize="18"/>
-                <MenuItem Header="Ajout d'un site" FontSize="18"/>
+
+            <MenuItem Header="Gestion des sites" BorderBrush="Black"  HorizontalAlignment="Left" Click="VisuSites">
             </MenuItem>
         </Menu>
 

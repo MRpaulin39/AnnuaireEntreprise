@@ -58,9 +58,16 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
 
         public void FillDataGrid()
         {
-            dataGridServices.ItemsSource = _context.Services
-                .Where(s => s.Name.Contains(FiltreText))
-                .ToList();
+            try 
+            { 
+                dataGridServices.ItemsSource = _context.Services
+                    .Where(s => s.Name.Contains(FiltreText))
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Une erreur est survenue lors de la récupération de la liste des services \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
