@@ -60,7 +60,7 @@ namespace AnnuaireEntreprise.Pages.Service
             }
             else
             {
-                MessageBox.Show("La modification a été annulé", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("La modification a été annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
         }

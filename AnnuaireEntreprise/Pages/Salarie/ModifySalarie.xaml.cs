@@ -18,6 +18,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
         public int IdSalarie;
         public int IdServiceSalarie;
         public int IdSitesSalarie;
+        public string OldMail;
 
         public ModifySalarie(AnnuaireContext context, int Id, string FirstName, string LastName, string Phone, string MobilePhone, string Mail, int ServicesId, string ServicesName, int SitesId, string SitesCity)
         {
@@ -33,6 +34,9 @@ namespace AnnuaireEntreprise.Pages.Salarie
             buttonService.Content = ServicesName;
             IdSitesSalarie = SitesId;
             buttonSites.Content = SitesCity;
+            OldMail = Mail;
+
+            textBoxFirstName.Focus();
         }
 
         //Afficher la liste des services
@@ -68,7 +72,7 @@ namespace AnnuaireEntreprise.Pages.Salarie
             bool CheckMobilePhone = true;
 
             //Vérification doublon
-            if (_context.Employees.Where(e => e.Mail == textBoxMail.Text).Count() > 0)
+            if (_context.Employees.Where(e => e.Mail == textBoxMail.Text).Count() > 0 && OldMail != textBoxMail.Text)
             {
                 var result = MessageBox.Show($"L'adresse email entrée ({textBoxMail.Text}) est déjà présente dans la base de données\nÊtes-vous sur de vouloir continuer ?", "Doublon", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result != MessageBoxResult.Yes)
@@ -90,15 +94,15 @@ namespace AnnuaireEntreprise.Pages.Salarie
                 MessageBox.Show("L'adresse email entrée (" + textBoxMail.Text + ") est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            //Vérification du regex numérique
+            //Vérification du regex numérique, renvoi FALSE si aucun problème
             Regex regex = new Regex("[^0-9]+");
             CheckPhone = regex.IsMatch(textBoxPhone.Text);
             CheckMobilePhone = regex.IsMatch(textBoxMobilePhone.Text);
 
             //Vérification des differents paramètres
-            if (CheckDoublon && CheckMail && CheckPhone && CheckMobilePhone)
+            if (textBoxFirstName.Text != "" && textBoxLastName.Text != "" && textBoxPhone.Text != "" && textBoxMobilePhone.Text != "" && textBoxMail.Text != "")
             {
-                if (textBoxFirstName.Text != "" && textBoxLastName.Text != "" && textBoxPhone.Text != "" && textBoxMobilePhone.Text != "" && textBoxMail.Text != "")
+                if (CheckDoublon && CheckMail && CheckPhone == false && CheckMobilePhone == false)
                 {
                     try
                     {
@@ -128,18 +132,19 @@ namespace AnnuaireEntreprise.Pages.Salarie
                     }
                     
                 }
-                else
+                else if (CheckPhone)
                 {
-                    MessageBox.Show("Veuillez remplir tous les champs !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Le numéro de téléphone est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                else if (CheckMobilePhone)
+                {
+                    MessageBox.Show("Le numéro de téléphone portable est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                
             }
-            else if (CheckPhone == false)
+            else
             {
-                MessageBox.Show("Le numéro de téléphone est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if (CheckMobilePhone == false)
-            {
-                MessageBox.Show("Le numéro de téléphone portable est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Veuillez remplir tous les champs !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

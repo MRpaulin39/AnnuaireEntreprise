@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="4*" />
+            <RowDefinition Height="1*" />
 
         </Grid.RowDefinitions>
 
@@ -35,6 +36,8 @@
             </DataGrid.Columns>
 
         </DataGrid>
+        <Button x:Name="buttonAnnuler" Content="Annuler" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" FontSize="14" Padding="20,10" Click="buttonAnnuler_Click"/>
+
 
     </Grid>
 </Window>

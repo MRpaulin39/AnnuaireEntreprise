@@ -24,6 +24,27 @@ namespace AnnuaireEntreprise.Pages.Site
         //Bouton d'ajout d'un site
         private void buttonValid_Click(object sender, RoutedEventArgs e)
         {
+            AddASite();
+        }
+
+        //Bouton d'annulation de l'ajout d'un site
+        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        //En cas d'appuie sur la touche entrée
+        private void textBoxNameSite_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == System.Windows.Input.Key.Enter)
+            {
+                AddASite();
+            }
+        }
+
+        //Fonction d'ajout d'une ville
+        public void AddASite()
+        {
             //Vérification doublon
             if (_context.Sites.Where(si => si.City == textBoxNameSite.Text).Count() > 0)
             {
@@ -34,7 +55,7 @@ namespace AnnuaireEntreprise.Pages.Site
             {
                 if (textBoxNameSite.Text != "")
                 {
-                    try 
+                    try
                     {
                         Sites WriteSite = new Sites();
 
@@ -56,12 +77,6 @@ namespace AnnuaireEntreprise.Pages.Site
                     MessageBox.Show("Veuillez remplir le nom de la ville !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
-
-        //Bouton d'annulation de l'ajout d'un site
-        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
         }
     }
 }

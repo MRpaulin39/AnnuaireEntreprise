@@ -28,6 +28,17 @@ namespace AnnuaireEntreprise.Pages.Site
         //Mise à jour du site
         private void buttonValid_Click(object sender, RoutedEventArgs e)
         {
+            ModifyASite();
+        }
+
+        //Bouton d'annulation de la modificaiton du site
+        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        public void ModifyASite()
+        {
             //Vérification doublon
             if (_context.Sites.Where(si => si.City == textBoxNameSite.Text).Count() > 0)
             {
@@ -39,7 +50,7 @@ namespace AnnuaireEntreprise.Pages.Site
                 if (textBoxNameSite.Text != "")
                 {
                     try
-                    { 
+                    {
                         var WriteSite = _context.Sites.Single(si => si.Id == idSite);
 
                         WriteSite.City = textBoxNameSite.Text;
@@ -60,14 +71,14 @@ namespace AnnuaireEntreprise.Pages.Site
                     MessageBox.Show("Veuillez remplir le nom de la ville !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            
-            
         }
 
-        //Bouton d'annulation de la modificaiton du site
-        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
+        private void textBoxNameSite_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            DialogResult = false;
+            if(e.Key == System.Windows.Input.Key.Enter)
+            {
+                ModifyASite();
+            }
         }
     }
 }

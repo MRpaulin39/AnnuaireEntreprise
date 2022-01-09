@@ -61,5 +61,10 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
                 MessageBox.Show($"Une erreur est survenue lors de la récupération de la liste des services \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
     }
 }

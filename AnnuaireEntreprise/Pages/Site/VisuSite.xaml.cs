@@ -50,7 +50,10 @@ namespace AnnuaireEntreprise.Pages.Site
             {
                 FillDataGrid();                
             }
-
+            else
+            {
+                MessageBox.Show("Modification annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         //Suppression d'un lieu de travail
@@ -111,6 +114,10 @@ namespace AnnuaireEntreprise.Pages.Site
             if (result == true)
             {
                 FillDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Ajout annulé", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

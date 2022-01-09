@@ -23,6 +23,8 @@ namespace AnnuaireEntreprise.Pages.Salarie
         {
             _context = context;
             InitializeComponent();
+
+            textBoxFirstName.Focus();
         }
 
         //Afficher la liste des services
@@ -82,13 +84,13 @@ namespace AnnuaireEntreprise.Pages.Salarie
                     MessageBox.Show("L'adresse email entrée (" + textBoxMail.Text + ") est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
-                //Vérification du regex numérique
+                //Vérification du regex numérique Renvoi FALSE si aucun problème
                 Regex regex = new Regex("[^0-9]+");
                 CheckPhone = regex.IsMatch(textBoxPhone.Text);
                 CheckMobilePhone = regex.IsMatch(textBoxMobilePhone.Text);
 
                 //Vérification des differents paramètres
-                if (CheckDoublon && CheckMail && CheckPhone && CheckMobilePhone) 
+                if (CheckDoublon && CheckMail && CheckPhone == false && CheckMobilePhone == false) 
                 {
                     try
                     {
@@ -117,19 +119,15 @@ namespace AnnuaireEntreprise.Pages.Salarie
                     }
 
                 }
-                else
+                else if (CheckPhone)
                 {
-                    MessageBox.Show("Annulation de l'ajout", "Annulation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Le numéro de téléphone est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (CheckMobilePhone)
+                {
+                    MessageBox.Show("Le numéro de téléphone portable est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 
-            }
-            else if (CheckPhone == false)
-            {
-                MessageBox.Show("Le numéro de téléphone est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if (CheckMobilePhone == false)
-            {
-                MessageBox.Show("Le numéro de téléphone portable est invalide !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {

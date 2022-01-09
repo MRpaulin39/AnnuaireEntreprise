@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnnuaireEntreprise.Pages.Service"
         mc:Ignorable="d"
-        Title="Ajouter un service" Height="150" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" FontSize="20">
+        Title="Ajouter un service" Height="150" Width="350" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" FontSize="20">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -18,8 +18,8 @@
         </Grid.RowDefinitions>
 
         <!--Ligne 0-->
-        <TextBox x:Name="textBoxNameService" HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="2" FontSize="20" MaxLength="30" KeyDown="textBoxNameService_KeyDown"/>
-        <Label x:Name="label" Content="Nom du service :" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.ColumnSpan="2" Width="162"/>
+        <TextBox x:Name="textBoxNameService" HorizontalAlignment="Left" Margin="35,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Grid.ColumnSpan="2" FontSize="20" MaxLength="30" KeyDown="textBoxNameService_KeyDown"/>
+        <Label x:Name="label" Content="Nom du service :" HorizontalAlignment="Left" Margin="94,-2,0,0" VerticalAlignment="Top" FontSize="20" Grid.ColumnSpan="2" Width="162"/>
 
         <!--Ligne 1-->
         <Button x:Name="buttonValid" Content="Valider" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="28" Width="130" FontSize="20" Click="buttonValid_Click"/>

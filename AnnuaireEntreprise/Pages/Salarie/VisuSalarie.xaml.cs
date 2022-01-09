@@ -167,6 +167,10 @@ namespace AnnuaireEntreprise.Pages.Salarie
             {
                 FillDataGrid();
             }
+            else
+            {
+                MessageBox.Show("Modification annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
         }
 
@@ -205,6 +209,10 @@ namespace AnnuaireEntreprise.Pages.Salarie
             if (result == true)
             {
                 FillDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Annulation de l'ajout", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

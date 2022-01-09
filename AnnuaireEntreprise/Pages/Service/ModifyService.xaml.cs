@@ -12,7 +12,7 @@ namespace AnnuaireEntreprise.Pages.Service
     {
         private readonly AnnuaireContext _context;
 
-        string NameService { get; set; }
+        string OldNameService { get; set; }
         int idService { get; set; }
 
         public ModifyService(AnnuaireContext context, int id, string Name)
@@ -21,15 +21,39 @@ namespace AnnuaireEntreprise.Pages.Service
             InitializeComponent();
 
             idService = id;
-            NameService = Name;
+            OldNameService = Name;
             textBoxNameService.Text = Name;
+
+            textBoxNameService.Focus();
         }
 
         //Mise à jour du service
         private void buttonValid_Click(object sender, RoutedEventArgs e)
         {
+
+            ModifyAService();
+        }
+
+        //Bouton d'annulation des modifications
+        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        //En cas d'appuie sur la touche entrée
+        private void textBoxNameService_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == System.Windows.Input.Key.Enter)
+            {
+                ModifyAService();
+            }
+        }
+
+        //Fonction de modification de service
+        public void ModifyAService()
+        {
             //Vérification doublon
-            if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0)
+            if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0 && OldNameService != textBoxNameService.Text)
             {
                 MessageBox.Show($"Le service entrée ({textBoxNameService.Text}) est déjà présente dans la base de données !", "Doublon", MessageBoxButton.OK, MessageBoxImage.Error);
 
@@ -39,7 +63,7 @@ namespace AnnuaireEntreprise.Pages.Service
                 if (textBoxNameService.Text != "")
                 {
                     try
-                    { 
+                    {
                         var WriteService = _context.Services.Single(se => se.Id == idService);
 
                         WriteService.Name = textBoxNameService.Text;
@@ -60,12 +84,6 @@ namespace AnnuaireEntreprise.Pages.Service
                     MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
-
-        //Bouton d'annulation des modifications
-        private void buttonAnnuler_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
         }
     }
 }
