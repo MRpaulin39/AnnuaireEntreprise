@@ -27,6 +27,10 @@ namespace AnnuaireEntreprise.Core.Infrastructure.Databases
             modelBuilder.ApplyConfiguration(new EntityConfigurations.SiteEntityTypeConfiguration());
         }
 
+        /// <summary>
+        /// Permet de configurer la connexion à la base de données
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=AnnuaireEntreprise;Trusted_Connection=True;MultipleActiveResultSets=true";
