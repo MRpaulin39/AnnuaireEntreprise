@@ -19,10 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AnnuaireEntreprise.Core.Infrastructure\AnnuaireEntreprise.Core.Infrastructure.csproj" />
   </ItemGroup>
 
