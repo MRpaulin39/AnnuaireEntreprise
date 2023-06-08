@@ -6,10 +6,6 @@ namespace AnnuaireEntreprise.Core.Infrastructure.Databases
     public class AnnuaireDbContext : DbContext
     {
         #region Constructeur
-        public AnnuaireDbContext(DbContextOptions options) : base(options)
-        {
-        }
-
         public AnnuaireDbContext()
         {
         }
