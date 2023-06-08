@@ -26,6 +26,13 @@ namespace AnnuaireEntreprise.Core.Infrastructure.Databases
             modelBuilder.ApplyConfiguration(new EntityConfigurations.ServiceEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EntityConfigurations.SiteEntityTypeConfiguration());
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=AnnuaireEntreprise;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+            optionsBuilder.UseSqlServer(connectionString);
+        }
         #endregion
 
         #region Propriétés
