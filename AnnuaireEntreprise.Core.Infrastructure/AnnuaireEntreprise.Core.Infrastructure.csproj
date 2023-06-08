@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AnnuaireEntreprise.Core.Interfaces\AnnuaireEntreprise.Core.Interfaces.csproj" />
     <ProjectReference Include="..\AnnuaireEntreprise.Core.Models\AnnuaireEntreprise.Core.Models.csproj" />
   </ItemGroup>
 
