@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
 {
-    public class EmployeeDataLayer : IEmployeeDataLayers
+    public class ServiceDataLayer : IServiceDataLayers
     {
         #region Propriétés
         private readonly AnnuaireDbContext _context;
@@ -13,7 +13,7 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
         #endregion
 
         #region Constructeur
-        public EmployeeDataLayer(AnnuaireDbContext context)
+        public ServiceDataLayer(AnnuaireDbContext context)
         {
             _context = context;
         }
@@ -22,44 +22,42 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
 
         #region Méthodes publiques
         #region Create (Ajout)
-        public void AddOneEmployee(Employee employee)
+        public void AddOneService(Service service)
         {
-            _context.Employees.Add(employee);
+            _context.Services.Add(service);
             _context.SaveChanges();
         }
         #endregion
 
         #region Read (Lecture)
-        public List<Employee> GetAllEmployees(int page = 1)
+        public List<Service> GetAllServices(int page = 1)
         {
-            return _context.Employees
+            return _context.Services
                 .Take(_nombreResultatParPage).Skip((page - 1) * _nombreResultatParPage)
                 .ToList();
         }
 
-        public Employee GetOneEmployeeById(int idEmployee)
+        public Service GetOneServiceById(int idService)
         {
-            return _context.Employees.Where(item => item.Id == idEmployee).Single();
+            return _context.Services.Where(item => item.Id == idService).Single();
         }
         #endregion
 
         #region Update (Modification)
-        public void UpdateOneEmployee(Employee employee)
+        public void UpdateOneService(Service service)
         {
-            _context.Entry(employee).State = EntityState.Modified;
-            _context.Entry(employee.Service).State = EntityState.Unchanged;
-            _context.Entry(employee.Site).State = EntityState.Unchanged;
+            _context.Entry(service).State = EntityState.Modified;
             _context.SaveChanges();
         }
         #endregion
 
         #region Delete (Suppresion)
-        public void DeleteOneEmployee(int idEmployee)
+        public void DeleteOneService(int idService)
         {
-            //Récupération de l'objet Employee associé à l'id
-            Employee employee = _context.Employees.Where(item => item.Id == idEmployee).Single();
+            //Récupération de l'objet Service associé à l'id
+            Service service = _context.Services.Where(item => item.Id == idService).Single();
 
-            _context.Remove(employee);
+            _context.Remove(service);
             _context.SaveChanges();
         }
         #endregion

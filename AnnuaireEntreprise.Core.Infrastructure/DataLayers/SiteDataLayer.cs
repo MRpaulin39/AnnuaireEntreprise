@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
 {
-    public class EmployeeDataLayer : IEmployeeDataLayers
+    public class SiteDataLayer : ISiteDataLayers
     {
         #region Propriétés
         private readonly AnnuaireDbContext _context;
@@ -13,7 +13,7 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
         #endregion
 
         #region Constructeur
-        public EmployeeDataLayer(AnnuaireDbContext context)
+        public SiteDataLayer(AnnuaireDbContext context)
         {
             _context = context;
         }
@@ -22,44 +22,42 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
 
         #region Méthodes publiques
         #region Create (Ajout)
-        public void AddOneEmployee(Employee employee)
+        public void AddOneSite(Site site)
         {
-            _context.Employees.Add(employee);
+            _context.Sites.Add(site);
             _context.SaveChanges();
         }
         #endregion
 
         #region Read (Lecture)
-        public List<Employee> GetAllEmployees(int page = 1)
+        public List<Site> GetAllSites(int page = 1)
         {
-            return _context.Employees
+            return _context.Sites
                 .Take(_nombreResultatParPage).Skip((page - 1) * _nombreResultatParPage)
                 .ToList();
         }
 
-        public Employee GetOneEmployeeById(int idEmployee)
+        public Site GetOneSiteById(int idSite)
         {
-            return _context.Employees.Where(item => item.Id == idEmployee).Single();
+            return _context.Sites.Where(item => item.Id == idSite).Single();
         }
         #endregion
 
         #region Update (Modification)
-        public void UpdateOneEmployee(Employee employee)
+        public void UpdateOneSite(Site site)
         {
-            _context.Entry(employee).State = EntityState.Modified;
-            _context.Entry(employee.Service).State = EntityState.Unchanged;
-            _context.Entry(employee.Site).State = EntityState.Unchanged;
+            _context.Entry(site).State = EntityState.Modified;
             _context.SaveChanges();
         }
         #endregion
 
         #region Delete (Suppresion)
-        public void DeleteOneEmployee(int idEmployee)
+        public void DeleteOneSite(int idSite)
         {
-            //Récupération de l'objet Employee associé à l'id
-            Employee employee = _context.Employees.Where(item => item.Id == idEmployee).Single();
+            //Récupération de l'objet Site associé à l'id
+            Site site = _context.Sites.Where(item => item.Id == idSite).Single();
 
-            _context.Remove(employee);
+            _context.Remove(site);
             _context.SaveChanges();
         }
         #endregion
