@@ -1,8 +1,8 @@
 ﻿using AnnuaireEntreprise.Core.Models;
 
-namespace AnnuaireEntreprise.Core.Interfaces.Infrastructure
+namespace AnnuaireEntreprise.Core.Interfaces.Repositories
 {
-    public interface ISiteDataLayers
+    public interface ISiteRepository
     {
         #region Create (Ajout)
         /// <summary>

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
 {
-    public class EmployeeDataLayer : IEmployeeDataLayers
+    public class EmployeeDataLayer : IEmployeeDataLayer
     {
         #region Propriétés
         private readonly AnnuaireDbContext _context;

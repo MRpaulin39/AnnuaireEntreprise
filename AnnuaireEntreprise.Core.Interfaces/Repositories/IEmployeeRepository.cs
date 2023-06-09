@@ -1,12 +1,12 @@
 ﻿using AnnuaireEntreprise.Core.Models;
 
-namespace AnnuaireEntreprise.Core.Interfaces.Infrastructure
+namespace AnnuaireEntreprise.Core.Interfaces.Repositories
 {
-    public interface IEmployeeDataLayers
+    public interface IEmployeeRepository
     {
         #region Create (Ajout)
         /// <summary>
-        /// Permet d'ajouter un employée dans la base de données
+        /// Permet d'ajouter un employée
         /// </summary>
         /// <param name="employee">Objet "employee"</param>
         public void AddOneEmployee(Employee employee);

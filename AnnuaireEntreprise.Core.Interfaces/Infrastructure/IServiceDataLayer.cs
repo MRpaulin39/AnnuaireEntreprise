@@ -2,7 +2,7 @@
 
 namespace AnnuaireEntreprise.Core.Interfaces.Infrastructure
 {
-    public interface IServiceDataLayers
+    public interface IServiceDataLayer
     {
         #region Create (Ajout)
         /// <summary>
