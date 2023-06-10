@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using AnnuaireEntreprise.Pages.Salarie;
+using System.Windows;
 using System.Windows.Input;
 
 namespace AnnuaireEntreprise
@@ -9,17 +10,20 @@ namespace AnnuaireEntreprise
     public partial class MainWindow : Window
     {
         public bool IsAuthentified = false;
+        private readonly VisuSalarie _visuSalarie;
 
 
-        public MainWindow()
+        public MainWindow(VisuSalarie visuSalarie)
         {
             InitializeComponent();
 
-            //Contents.Content = new VisuSalarie(_context, IsAuthentified);
-            //if (IsAuthentified == false)
-            //{
-            //    MainMenu.Visibility = Visibility.Hidden;
-            //}
+            Contents.Content = _visuSalarie;
+            if (IsAuthentified == false)
+            {
+                MainMenu.Visibility = Visibility.Hidden;
+            }
+
+            _visuSalarie = visuSalarie;
         }
 
         //Afficher l'interface de la liste des salariés

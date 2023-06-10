@@ -3,6 +3,7 @@ using AnnuaireEntreprise.Core.Infrastructure.Databases;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AnnuaireEntreprise.Core.Infrastructure.Databases.Migrations
 {
     [DbContext(typeof(AnnuaireDbContext))]
-    partial class AnnuaireDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230609161418_AnnuaireContextV2.1")]
+    partial class AnnuaireContextV21
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

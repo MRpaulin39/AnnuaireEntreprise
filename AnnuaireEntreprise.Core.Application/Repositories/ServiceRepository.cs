@@ -28,7 +28,7 @@ namespace AnnuaireEntreprise.Core.Application.Repositories
         #region Read (Lecture)
         public List<Service> GetAllServices(int page = 1)
         {
-            throw new NotImplementedException();
+            return _serviceDataLayers.GetAllServices(page);
         }
 
         public Service GetOneServiceById(int idService)

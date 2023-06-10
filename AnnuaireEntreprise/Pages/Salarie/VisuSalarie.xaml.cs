@@ -1,11 +1,12 @@
-﻿using AnnuaireEntreprise.Context;
-using AnnuaireEntreprise.Data.Models;
-using AnnuaireEntreprise.ViewModels;
+﻿using AnnuaireEntreprise.Core.Interfaces.Repositories;
+using AnnuaireEntreprise.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows;
+using System.Windows.Annotations;
 using System.Windows.Controls;
 
 namespace AnnuaireEntreprise.Pages.Salarie
@@ -15,15 +16,18 @@ namespace AnnuaireEntreprise.Pages.Salarie
     /// </summary>
     public partial class VisuSalarie : Page
     {
-        private readonly AnnuaireContext _context;
+        private string FiltreText = "";
+        private string FiltreServices = "";
+        private string FiltreSites = "";
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IServiceRepository _serviceRepository;
+        private readonly ISiteRepository _siteRepository;
 
-        string FiltreText = "";
-        string FiltreServices = "";
-        string FiltreSites = "";
-
-        public VisuSalarie(AnnuaireContext context, bool IsAuthentified)
+        public VisuSalarie(IEmployeeRepository employeeRepository, IServiceRepository serviceRepository, ISiteRepository siteRepository) //, bool IsAuthentified
         {
-            _context = context;
+            _employeeRepository = employeeRepository;
+            _serviceRepository = serviceRepository;
+            _siteRepository = siteRepository;
             InitializeComponent();
 
             //A l'init, on remplit la DataGrid
@@ -36,51 +40,21 @@ namespace AnnuaireEntreprise.Pages.Salarie
             FillComboBoxVilles();
 
 
-            if (IsAuthentified)
-            {
-                buttonAdd.Visibility = Visibility.Visible;
-                DataGridColumnModifier.Visibility = Visibility.Visible;
-                DataGridColumnDelete.Visibility = Visibility.Visible;
-            }
+            //if (IsAuthentified)
+            //{
+            //    buttonAdd.Visibility = Visibility.Visible;
+            //    DataGridColumnModifier.Visibility = Visibility.Visible;
+            //    DataGridColumnDelete.Visibility = Visibility.Visible;
+            //}
         }
 
         //Actualisation de la liste des employées
-        public void FillDataGrid()
+        private void FillDataGrid()
         {
             try
             {
-                var ListEmployeeBDD = _context.Employees
-                .Join(
-                    _context.Services,
-                    Employee => Employee.Services.Id,
-                    Services => Services.Id,
-                    (Employee, Services) => new { Employee, Services }
-                )
-                .Join(
-                    _context.Sites,
-                    Employee => Employee.Employee.Sites.Id,
-                    Sites => Sites.Id,
-                    (Employee, Sites) => new ReadEmployeeViewModels()
-                    {
-                        Id = Employee.Employee.Id,
-                        FirstName = Employee.Employee.FirstName,
-                        LastName = Employee.Employee.LastName,
-                        Phone = Employee.Employee.Phone,
-                        MobilePhone = Employee.Employee.MobilePhone,
-                        Mail = Employee.Employee.Mail,
-                        ServicesId = Employee.Services.Id,
-                        ServicesName = Employee.Services.Name,
-                        SitesId = Sites.Id,
-                        SitesCity = Sites.City,
-                        FirstAndLastName = Employee.Employee.FirstName + " " + Employee.Employee.LastName
-                    }
-                )
-                .Where(e => e.FirstAndLastName.Contains(FiltreText))
-                .Where(e => e.ServicesName.Contains(FiltreServices))
-                .Where(e => e.SitesCity.Contains(FiltreSites))
-                .OrderBy(e => e.LastName)
-                .ToList();
-
+                List<Employee> ListEmployeeBDD = _employeeRepository.GetAllEmployees();
+                
                 dataGridEmployee.ItemsSource = ListEmployeeBDD;
             }
             catch (Exception ex)
@@ -91,16 +65,16 @@ namespace AnnuaireEntreprise.Pages.Salarie
         }
 
         //Permet de remplir le comboBox avec le nom des services
-        public void FillComboBoxServices()
+        private void FillComboBoxServices()
         {
             try
             {
-                var ListServices = _context.Services.ToList();
+                List<Core.Models.Service> ListServices = _serviceRepository.GetAllServices();
                 comboBoxService.Items.Add("");
 
-                foreach (Services services in ListServices)
+                foreach (Core.Models.Service service in ListServices)
                 {
-                    comboBoxService.Items.Add(services.Name);
+                    comboBoxService.Items.Add(service.Name);
                 }
 
                 comboBoxService.SelectedIndex = 0;
@@ -113,16 +87,16 @@ namespace AnnuaireEntreprise.Pages.Salarie
         }
 
         //Permet de remplir le comboBox avec le nom des différentes villes
-        public void FillComboBoxVilles()
+        private void FillComboBoxVilles()
         {
             try
             {
-                var ListSites = _context.Sites.ToList();
+                List<Core.Models.Site> ListSites = _siteRepository.GetAllSites();
                 comboBoxSites.Items.Add("");
 
-                foreach (Sites sites in ListSites)
+                foreach (Core.Models.Site site in ListSites)
                 {
-                    comboBoxSites.Items.Add(sites.City);
+                    comboBoxSites.Items.Add(site.City);
                 }
 
                 comboBoxSites.SelectedIndex = 0;
@@ -158,19 +132,19 @@ namespace AnnuaireEntreprise.Pages.Salarie
         private void ModifyEmployee_Click(object sender, RoutedEventArgs e)
         {
             //Affichage d'une form avec la possibilité de modifier l'employée
-            var sender_context = sender as System.Windows.Controls.Button;
-            var context = sender_context!.DataContext as ReadEmployeeViewModels;
+            //var sender_context = sender as System.Windows.Controls.Button;
+            //var context = sender_context!.DataContext as ReadEmployeeViewModels;
 
-            var win = new ModifySalarie(_context, context!.Id, context.FirstName, context.LastName, context.Phone, context.MobilePhone, context.Mail, context.ServicesId, context.ServicesName, context.SitesId, context.SitesCity);
-            var result = win.ShowDialog();
-            if (result == true)
-            {
-                FillDataGrid();
-            }
-            else
-            {
-                MessageBox.Show("Modification annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            //var win = new ModifySalarie(_context, context!.Id, context.FirstName, context.LastName, context.Phone, context.MobilePhone, context.Mail, context.ServicesId, context.ServicesName, context.SitesId, context.SitesCity);
+            //var result = win.ShowDialog();
+            //if (result == true)
+            //{
+            //    FillDataGrid();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Modification annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            //}
 
         }
 
@@ -178,42 +152,42 @@ namespace AnnuaireEntreprise.Pages.Salarie
         private void DeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
             //Demander la confirmation de suppression
-            var sender_context = sender as Button;
+            //var sender_context = sender as Button;
 
-            var context = sender_context!.DataContext as ReadEmployeeViewModels;
+            //var context = sender_context!.DataContext as ReadEmployeeViewModels;
 
-            var resultMsgBoxDelete = MessageBox.Show("Êtes-vous sûr de vouloir supprimer l'employée : '" + context!.FirstAndLastName + "' ?", "Confirmer la suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (resultMsgBoxDelete == MessageBoxResult.Yes)
-            {
-                var employeeSelected = _context.Employees.Single(e => e.Id == context.Id);
-                if (employeeSelected != null)
-                {
-                    _context.Remove(employeeSelected);
-                    _context.SaveChanges();
+            //var resultMsgBoxDelete = MessageBox.Show("Êtes-vous sûr de vouloir supprimer l'employée : '" + context!.FirstAndLastName + "' ?", "Confirmer la suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //if (resultMsgBoxDelete == MessageBoxResult.Yes)
+            //{
+            //    var employeeSelected = _context.Employees.Single(e => e.Id == context.Id);
+            //    if (employeeSelected != null)
+            //    {
+            //        _context.Remove(employeeSelected);
+            //        _context.SaveChanges();
 
-                    FillDataGrid();
-                }
-                else
-                {
-                    MessageBox.Show("Impossible de supprimer l'employée, il n'est pas présent dans la base de données", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
+            //        FillDataGrid();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Impossible de supprimer l'employée, il n'est pas présent dans la base de données", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    }
+            //}
 
         }
 
         //Permet d'afficher l'interface d'ajout d'un employé
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            var win = new AddSalarie(_context);
-            var result = win.ShowDialog();
-            if (result == true)
-            {
-                FillDataGrid();
-            }
-            else
-            {
-                MessageBox.Show("Annulation de l'ajout", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            //var win = new AddSalarie(_context);
+            //var result = win.ShowDialog();
+            //if (result == true)
+            //{
+            //    FillDataGrid();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Annulation de l'ajout", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            //}
         }
     }
 }

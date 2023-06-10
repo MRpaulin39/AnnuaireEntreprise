@@ -28,7 +28,7 @@ namespace AnnuaireEntreprise.Core.Application.Repositories
         #region Read (Lecture)
         public List<Employee> GetAllEmployees(int page = 1)
         {
-            throw new NotImplementedException();
+            return _employeeDataLayer.GetAllEmployees(page);
         }
 
         public Employee GetOneEmployeeById(int idEmployee)

@@ -28,7 +28,7 @@ namespace AnnuaireEntreprise.Core.Application.Repositories
         #region Read (Lecture)
         public List<Site> GetAllSites(int page = 1)
         {
-            throw new NotImplementedException();
+            return _siteDataLayer.GetAllSites(page);
         }
 
         public Site GetOneSiteById(int idSite)

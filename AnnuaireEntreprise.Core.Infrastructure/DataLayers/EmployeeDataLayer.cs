@@ -13,9 +13,9 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
         #endregion
 
         #region Constructeur
-        public EmployeeDataLayer(AnnuaireDbContext context)
+        public EmployeeDataLayer()
         {
-            _context = context;
+            _context = new AnnuaireDbContext();
         }
         #endregion
 

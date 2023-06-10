@@ -2,7 +2,9 @@
 using AnnuaireEntreprise.Core.Infrastructure.DataLayers;
 using AnnuaireEntreprise.Core.Interfaces.Infrastructure;
 using AnnuaireEntreprise.Core.Interfaces.Repositories;
+using AnnuaireEntreprise.Pages.Salarie;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Configuration;
 using System.Windows;
 
@@ -13,25 +15,28 @@ namespace AnnuaireEntreprise
     /// </summary>
     public partial class App : Application
     {
+        public IServiceProvider _ServiceProvider { get; private set; }
+
         public App()
         {
 
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        private void OnStartup(object sender, StartupEventArgs e)
         {
             ServiceCollection serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
 
-            ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+            _ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
+            MainWindow mainWindow = _ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient(typeof(MainWindow));
+            services.AddTransient(typeof(VisuSalarie));
 
             #region Résolution des interfaces
             #region DataLayers

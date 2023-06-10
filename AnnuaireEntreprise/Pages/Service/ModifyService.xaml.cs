@@ -1,5 +1,4 @@
-﻿using AnnuaireEntreprise.Context;
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows;
 
@@ -10,14 +9,12 @@ namespace AnnuaireEntreprise.Pages.Service
     /// </summary>
     public partial class ModifyService : Window
     {
-        private readonly AnnuaireContext _context;
-
         string OldNameService { get; set; }
         int idService { get; set; }
 
-        public ModifyService(AnnuaireContext context, int id, string Name)
+        public ModifyService(int id, string Name)
         {
-            _context = context;
+            //_context = context;
             InitializeComponent();
 
             idService = id;
@@ -53,37 +50,37 @@ namespace AnnuaireEntreprise.Pages.Service
         public void ModifyAService()
         {
             //Vérification doublon
-            if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0 && OldNameService != textBoxNameService.Text)
-            {
-                MessageBox.Show($"Le service entrée ({textBoxNameService.Text}) est déjà présente dans la base de données !", "Doublon", MessageBoxButton.OK, MessageBoxImage.Error);
+            //if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0 && OldNameService != textBoxNameService.Text)
+            //{
+            //    MessageBox.Show($"Le service entrée ({textBoxNameService.Text}) est déjà présente dans la base de données !", "Doublon", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            }
-            else
-            {
-                if (textBoxNameService.Text != "")
-                {
-                    try
-                    {
-                        var WriteService = _context.Services.Single(se => se.Id == idService);
+            //}
+            //else
+            //{
+            //    if (textBoxNameService.Text != "")
+            //    {
+            //        try
+            //        {
+            //            var WriteService = _context.Services.Single(se => se.Id == idService);
 
-                        WriteService.Name = textBoxNameService.Text;
+            //            WriteService.Name = textBoxNameService.Text;
 
-                        _context.Entry(WriteService).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                        _context.SaveChanges();
+            //            _context.Entry(WriteService).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //            _context.SaveChanges();
 
-                        MessageBox.Show("Modification enregistrée", "Modification", MessageBoxButton.OK, MessageBoxImage.Information);
-                        DialogResult = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Une erreur est survenue lors de la modification du nom du service \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
+            //            MessageBox.Show("Modification enregistrée", "Modification", MessageBoxButton.OK, MessageBoxImage.Information);
+            //            DialogResult = true;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show($"Une erreur est survenue lors de la modification du nom du service \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    }
+            //}
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using AnnuaireEntreprise.Context;
-using AnnuaireEntreprise.Data.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -12,11 +10,9 @@ namespace AnnuaireEntreprise.Pages.Service
     /// </summary>
     public partial class AddService : Window
     {
-        private readonly AnnuaireContext _context;
-
-        public AddService(AnnuaireContext context)
+        public AddService()
         {
-            _context = context;
+            //_context = context;
             InitializeComponent();
 
             textBoxNameService.Focus();
@@ -47,38 +43,38 @@ namespace AnnuaireEntreprise.Pages.Service
         public void AddAService()
         {
             //Vérification doublon
-            if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0)
-            {
-                MessageBox.Show($"Le service entrée ({textBoxNameService.Text}) est déjà présente dans la base de données !", "Doublon", MessageBoxButton.OK, MessageBoxImage.Error);
+            //if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0)
+            //{
+            //    MessageBox.Show($"Le service entrée ({textBoxNameService.Text}) est déjà présente dans la base de données !", "Doublon", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            }
-            else
-            {
-                if (textBoxNameService.Text != "")
-                {
-                    try
-                    {
-                        Services WriteService = new Services();
+            //}
+            //else
+            //{
+            //    if (textBoxNameService.Text != "")
+            //    {
+            //        try
+            //        {
+            //            Services WriteService = new Services();
 
-                        WriteService.Name = textBoxNameService.Text;
+            //            WriteService.Name = textBoxNameService.Text;
 
-                        _context.Services.Add(WriteService);
-                        _context.SaveChanges();
+            //            _context.Services.Add(WriteService);
+            //            _context.SaveChanges();
 
-                        MessageBox.Show("Ajout enregistré", "Ajout", MessageBoxButton.OK, MessageBoxImage.Information);
-                        DialogResult = true;
+            //            MessageBox.Show("Ajout enregistré", "Ajout", MessageBoxButton.OK, MessageBoxImage.Information);
+            //            DialogResult = true;
 
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Une erreur est survenue lors de l'ajout du nom du service \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show($"Une erreur est survenue lors de l'ajout du nom du service \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    }
+            //}
         }
     }
 }

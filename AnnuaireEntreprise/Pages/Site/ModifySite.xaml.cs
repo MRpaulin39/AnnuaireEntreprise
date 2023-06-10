@@ -1,5 +1,4 @@
-﻿using AnnuaireEntreprise.Context;
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows;
 
@@ -10,14 +9,12 @@ namespace AnnuaireEntreprise.Pages.Site
     /// </summary>
     public partial class ModifySite : Window
     {
-        private readonly AnnuaireContext _context;
 
         string NameSite { get; set; }
         int idSite { get; set; }
 
-        public ModifySite(AnnuaireContext context, int id, string Name)
+        public ModifySite(int id, string Name)
         {
-            _context = context;
             InitializeComponent();
 
             idSite = id;
@@ -40,37 +37,37 @@ namespace AnnuaireEntreprise.Pages.Site
         public void ModifyASite()
         {
             //Vérification doublon
-            if (_context.Sites.Where(si => si.City == textBoxNameSite.Text).Count() > 0)
-            {
-                MessageBox.Show($"La ville entrée ({textBoxNameSite.Text}) est déjà présente dans la base de données !", "Doublon", MessageBoxButton.OK, MessageBoxImage.Error);
+            //if (_context.Sites.Where(si => si.City == textBoxNameSite.Text).Count() > 0)
+            //{
+            //    MessageBox.Show($"La ville entrée ({textBoxNameSite.Text}) est déjà présente dans la base de données !", "Doublon", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            }
-            else
-            {
-                if (textBoxNameSite.Text != "")
-                {
-                    try
-                    {
-                        var WriteSite = _context.Sites.Single(si => si.Id == idSite);
+            //}
+            //else
+            //{
+            //    if (textBoxNameSite.Text != "")
+            //    {
+            //        try
+            //        {
+            //            var WriteSite = _context.Sites.Single(si => si.Id == idSite);
 
-                        WriteSite.City = textBoxNameSite.Text;
+            //            WriteSite.City = textBoxNameSite.Text;
 
-                        _context.Entry(WriteSite).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                        _context.SaveChanges();
+            //            _context.Entry(WriteSite).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //            _context.SaveChanges();
 
-                        MessageBox.Show("Modification enregistrée", "Modification", MessageBoxButton.OK, MessageBoxImage.Information);
-                        DialogResult = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Une erreur est survenue lors de la modification du lieux \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Veuillez remplir le nom de la ville !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
+            //            MessageBox.Show("Modification enregistrée", "Modification", MessageBoxButton.OK, MessageBoxImage.Information);
+            //            DialogResult = true;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            MessageBox.Show($"Une erreur est survenue lors de la modification du lieux \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Veuillez remplir le nom de la ville !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    }
+            //}
         }
 
         private void textBoxNameSite_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
