@@ -38,14 +38,24 @@ namespace AnnuaireEntreprise.Pages.Salarie
 
             //Remplit la liste des emplacements
             FillComboBoxVilles();
+                        
+        }
 
-
-            //if (IsAuthentified)
-            //{
-            //    buttonAdd.Visibility = Visibility.Visible;
-            //    DataGridColumnModifier.Visibility = Visibility.Visible;
-            //    DataGridColumnDelete.Visibility = Visibility.Visible;
-            //}
+        //Permet d'actualiser le front si utilisateur authentifier ou non
+        public void CheckIfUserIsAuthentified(bool IsAuthentified)
+        {
+            if (IsAuthentified)
+            {
+                buttonAdd.Visibility = Visibility.Visible;
+                DataGridColumnModifier.Visibility = Visibility.Visible;
+                DataGridColumnDelete.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                buttonAdd.Visibility = Visibility.Hidden;
+                DataGridColumnModifier.Visibility = Visibility.Hidden;
+                DataGridColumnDelete.Visibility = Visibility.Hidden;
+            }
         }
 
         //Actualisation de la liste des employées

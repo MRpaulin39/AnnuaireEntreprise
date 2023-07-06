@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AnnuaireEntreprise.Core.Interfaces.Repositories;
+using AnnuaireEntreprise.Core.Models;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -11,12 +14,14 @@ namespace AnnuaireEntreprise.Pages.Site
     /// </summary>
     public partial class VisuSite : Page
     {
+        private readonly ISiteRepository _siteRepository;
         string FiltreText = "";
 
-        public VisuSite()
+        public VisuSite(ISiteRepository siteRepository)
         {
-            //_context = context;
             InitializeComponent();
+
+            _siteRepository = siteRepository;
 
             //A l'init, on remplit la DataGrid
             FillDataGrid();
@@ -26,11 +31,9 @@ namespace AnnuaireEntreprise.Pages.Site
         //Affichage de la liste des lieux de travail
         public void FillDataGrid()
         {
-            //var ListServicesBDD = _context.Sites
-            //    .Where(se => se.City.Contains(FiltreText))
-            //    .ToList();
+            List<Core.Models.Site> ListServicesBDD = _siteRepository.GetAllSites();
 
-            //dataGridSite.ItemsSource = ListServicesBDD;
+            dataGridSite.ItemsSource = ListServicesBDD;
         }
 
         //Affichage l'interface de modification

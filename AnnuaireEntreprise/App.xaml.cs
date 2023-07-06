@@ -1,8 +1,12 @@
 ﻿using AnnuaireEntreprise.Core.Application.Repositories;
+using AnnuaireEntreprise.Core.Infrastructure.Databases;
 using AnnuaireEntreprise.Core.Infrastructure.DataLayers;
 using AnnuaireEntreprise.Core.Interfaces.Infrastructure;
 using AnnuaireEntreprise.Core.Interfaces.Repositories;
+using AnnuaireEntreprise.Pages.Authentification;
 using AnnuaireEntreprise.Pages.Salarie;
+using AnnuaireEntreprise.Pages.Service;
+using AnnuaireEntreprise.Pages.Site;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Configuration;
@@ -35,8 +39,13 @@ namespace AnnuaireEntreprise
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AnnuaireDbContext>();
+
             services.AddTransient(typeof(MainWindow));
             services.AddTransient(typeof(VisuSalarie));
+            services.AddTransient(typeof(VisuServices));
+            services.AddTransient(typeof(VisuSite));
+            services.AddTransient(typeof(AuthentificationAdmin));
 
             #region Résolution des interfaces
             #region DataLayers

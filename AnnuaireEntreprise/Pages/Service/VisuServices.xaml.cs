@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AnnuaireEntreprise.Core.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -11,13 +14,14 @@ namespace AnnuaireEntreprise.Pages.Service
     /// </summary>
     public partial class VisuServices : Page
     {
-
         string FiltreText = "";
+        private readonly IServiceRepository _serviceRepository;
 
-        public VisuServices()
+        public VisuServices(IServiceRepository serviceRepository)
         {
-            //_context = context;
             InitializeComponent();
+
+            _serviceRepository = serviceRepository;
 
             //A l'init, on remplit la DataGrid
             FillDataGrid();
@@ -29,11 +33,9 @@ namespace AnnuaireEntreprise.Pages.Service
         {
             try
             {
-                //var ListServicesBDD = _context.Services
-                //    .Where(se => se.Name.Contains(FiltreText))
-                //    .ToList();
+                List<Core.Models.Service> ListServicesBDD = _serviceRepository.GetAllServices();
 
-                //dataGridService.ItemsSource = ListServicesBDD;
+                dataGridService.ItemsSource = ListServicesBDD;
 
             }
             catch (Exception ex)
