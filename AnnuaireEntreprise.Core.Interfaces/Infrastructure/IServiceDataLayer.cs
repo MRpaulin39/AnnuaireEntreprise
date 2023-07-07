@@ -26,6 +26,20 @@ namespace AnnuaireEntreprise.Core.Interfaces.Infrastructure
         /// <param name="page">Numéro de page, par défaut page 1</param>
         /// <returns>Retourne une liste des services</returns>
         public List<Service> GetAllServices(int page = 1);
+
+        /// <summary>
+        /// Permet de compter le nombre d'employées associé à un service
+        /// </summary>
+        /// <param name="idService">Id du service</param>
+        /// <returns>Le nombre d'employé associé à un service</returns>
+        public int CountEmployeeAssociateToTheService(int idService);
+
+        /// <summary>
+        /// Permet de vérifier si le service existe
+        /// </summary>
+        /// <param name="serviceName">Nom du service</param>
+        /// <returns>Booléan</returns>
+        public bool CheckIfServiceAlreadyExist(string serviceName);
         #endregion
 
         #region Update (Modification)

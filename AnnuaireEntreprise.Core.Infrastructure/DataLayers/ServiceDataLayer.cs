@@ -41,11 +41,23 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
         {
             return _context.Services.Where(item => item.Id == idService).Single();
         }
+
+        public int CountEmployeeAssociateToTheService(int idService)
+        {
+            return _context.Employees.Where(item => item.Service.Id == idService).Count();
+        }
+
+        public bool CheckIfServiceAlreadyExist(string serviceName)
+        {
+            return _context.Services.Where(item => item.Name == serviceName).Any();
+        }
         #endregion
 
         #region Update (Modification)
         public void UpdateOneService(Service service)
         {
+            _context.ChangeTracker.Clear();
+
             _context.Entry(service).State = EntityState.Modified;
             _context.SaveChanges();
         }
@@ -59,7 +71,7 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
 
             _context.Remove(service);
             _context.SaveChanges();
-        }
+        }        
         #endregion
 
         #endregion

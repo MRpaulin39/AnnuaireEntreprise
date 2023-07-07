@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AnnuaireEntreprise.Core.CustomException.Repositories;
+using AnnuaireEntreprise.Core.Interfaces.Repositories;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -10,10 +12,13 @@ namespace AnnuaireEntreprise.Pages.Service
     /// </summary>
     public partial class AddService : Window
     {
-        public AddService()
+        private readonly IServiceRepository _serviceRepository;
+
+        public AddService(IServiceRepository serviceRepository)
         {
-            //_context = context;
             InitializeComponent();
+
+            _serviceRepository = serviceRepository;
 
             textBoxNameService.Focus();
         }
@@ -42,39 +47,23 @@ namespace AnnuaireEntreprise.Pages.Service
         //Fonction d'ajout de service
         public void AddAService()
         {
-            //Vérification doublon
-            //if (_context.Services.Where(se => se.Name == textBoxNameService.Text).Count() > 0)
-            //{
-            //    MessageBox.Show($"Le service entrée ({textBoxNameService.Text}) est déjà présente dans la base de données !", "Doublon", MessageBoxButton.OK, MessageBoxImage.Error);
+            try
+            {
+                _serviceRepository.AddOneService(new() { Id = 0, Name = textBoxNameService.Text });
 
-            //}
-            //else
-            //{
-            //    if (textBoxNameService.Text != "")
-            //    {
-            //        try
-            //        {
-            //            Services WriteService = new Services();
+                MessageBox.Show("Ajout réussit", "Ajout réussit", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            //            WriteService.Name = textBoxNameService.Text;
-
-            //            _context.Services.Add(WriteService);
-            //            _context.SaveChanges();
-
-            //            MessageBox.Show("Ajout enregistré", "Ajout", MessageBoxButton.OK, MessageBoxImage.Information);
-            //            DialogResult = true;
-
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            MessageBox.Show($"Une erreur est survenue lors de l'ajout du nom du service \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Veuillez remplir le nom du service !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    }
-            //}
+                DialogResult = true;
+                this.Close();
+            }
+            catch(ServiceRepositoryException ex)
+            {
+                MessageBox.Show(ex.Message, "Attention", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Une erreur s'est produite lors de l'ajout du service \nErreur : " + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

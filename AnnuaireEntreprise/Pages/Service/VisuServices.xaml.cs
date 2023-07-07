@@ -1,4 +1,5 @@
-﻿using AnnuaireEntreprise.Core.Interfaces.Repositories;
+﻿using AnnuaireEntreprise.Core.CustomException.Repositories;
+using AnnuaireEntreprise.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -48,19 +49,19 @@ namespace AnnuaireEntreprise.Pages.Service
         private void ModifyService_Click(object sender, RoutedEventArgs e)
         {
             //Affichage d'une form avec la possibilité de modifier l'employée
-            //var sender_context = sender as Button;
-            //var context = sender_context!.DataContext as Services;
+            var sender_context = sender as Button;
+            Core.Models.Service service = sender_context!.DataContext as Core.Models.Service;
 
-            //var win = new ModifyService(_context, context.Id, context.Name);
-            //var result = win.ShowDialog();
-            //if (result == true)
-            //{
-            //    FillDataGrid();                
-            //}
-            //else
-            //{
-            //    MessageBox.Show("La modification a été annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
+            var win = new ModifyService(_serviceRepository, service);
+            var result = win.ShowDialog();
+            if (result == true)
+            {
+                FillDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("La modification a été annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
         }
 
@@ -68,41 +69,28 @@ namespace AnnuaireEntreprise.Pages.Service
         private void DeleteService_Click(object sender, RoutedEventArgs e)
         {
             //Demander la confirmation de suppression
-            //var sender_context = sender as Button;
-            
-            //var context = sender_context!.DataContext as Services;
+            var sender_context = sender as Button;
 
-            //var resultMsgBoxDelete = MessageBox.Show("Êtes-vous sûr de vouloir supprimer le service : '" + context!.Name + "' ?", "Confirmer la suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            //if (resultMsgBoxDelete == MessageBoxResult.Yes)
-            //{
-            //    try 
-            //    {
-            //        //Récupération du nombre d'attribution du service à un employé
-            //        int NbAttribution = _context.Employees.Count(e => e.Services.Id == context.Id);
+            Core.Models.Service serviceToDelete = sender_context!.DataContext as Core.Models.Service;
 
-            //        var serviceSelected = _context.Services.Single(s => s.Id == context.Id);
-            //        if (NbAttribution > 0)
-            //        {
-            //            MessageBox.Show("Impossible de supprimer le service, il est attribué à " + NbAttribution + " employé(s) !", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //        }
-            //        else if (serviceSelected != null && NbAttribution == 0)
-            //        {
-            //            _context.Remove(serviceSelected);
-            //            _context.SaveChanges();
+            var resultMsgBoxDelete = MessageBox.Show("Êtes-vous sûr de vouloir supprimer le service : '" + serviceToDelete.Name + "' ?", "Confirmer la suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (resultMsgBoxDelete == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    //Récupération du nombre d'attribution du service à un employé
+                    _serviceRepository.DeleteOneService(serviceToDelete.Id);
+                }
+                catch (ServiceRepositoryException ex)
+                {
+                    MessageBox.Show(ex.Message, "Attention", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Une erreur est survenue lors de la suppression du service \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
 
-            //            FillDataGrid();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Impossible de supprimer le service, il n'est pas présent dans la base de données", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Une erreur est survenue lors de la suppression du service \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    }
-            //}
-            
         }
 
         //Application du filtre
@@ -115,16 +103,16 @@ namespace AnnuaireEntreprise.Pages.Service
         //Affichage de l'interface d'ajout d'un service
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            //var win = new AddService(_context);
-            //var result = win.ShowDialog();
-            //if (result == true)
-            //{
-            //    FillDataGrid();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("L'ajout a été annulé", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
+            var win = new AddService(_serviceRepository);
+            var result = win.ShowDialog();
+            if (result == true)
+            {
+                FillDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("L'ajout a été annulé", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }
