@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AnnuaireEntreprise.Core.CustomException\AnnuaireEntreprise.Core.CustomException.csproj" />
     <ProjectReference Include="..\AnnuaireEntreprise.Core.Infrastructure\AnnuaireEntreprise.Core.Infrastructure.csproj" />
     <ProjectReference Include="..\AnnuaireEntreprise.Core.Interfaces\AnnuaireEntreprise.Core.Interfaces.csproj" />
     <ProjectReference Include="..\AnnuaireEntreprise.Core.Models\AnnuaireEntreprise.Core.Models.csproj" />

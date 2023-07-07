@@ -33,7 +33,7 @@ namespace AnnuaireEntreprise.Core.Application.Repositories
 
         public Service GetOneServiceById(int idService)
         {
-            throw new NotImplementedException();
+            return _serviceDataLayers.GetOneServiceById(idService);
         }
         #endregion
 

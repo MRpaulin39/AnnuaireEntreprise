@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnnuaireEntreprise.Core.Interfaces.Repositories;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,11 +13,14 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
     {
         public int IdSites { get; set; }
         public string CitySites { get; set; }
+        private readonly ISiteRepository _siteRepository;
 
-        public ChoiceSites()
+        public ChoiceSites(ISiteRepository siteRepository)
         {
-            //_context = context;
             InitializeComponent();
+
+            _siteRepository = siteRepository;
+
             FillDataGrid();
             
         }
@@ -24,13 +28,13 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
         //Validation du lieu de travail sélectionné
         private void SelectSites_Click(object sender, RoutedEventArgs e)
         {
-            //var sender_context = sender as Button;
-            //var context = sender_context!.DataContext as Sites;
+            var sender_context = sender as Button;
+            Core.Models.Site context = sender_context!.DataContext as Core.Models.Site;
 
-            //IdSites = context!.Id;
-            //CitySites = context.City;
+            IdSites = context.Id;
+            CitySites = context.City;
 
-            //DialogResult = true;
+            DialogResult = true;
         }
 
         //Permettant le filtre
@@ -42,16 +46,14 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
         //Actualisation de la liste des lieux de travail
         public void FillDataGrid()
         {
-            //try
-            //{
-            //    dataGridServices.ItemsSource = _context.Sites
-            //        .Where(s => s.City.Contains(textBoxSites.Text))
-            //        .ToList();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Une erreur est survenue lors de la récupération de la liste des lieux \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
+            try
+            {
+                dataGridServices.ItemsSource = _siteRepository.GetAllSites();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Une erreur est survenue lors de la récupération de la liste des lieux \nErreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void buttonAnnuler_Click(object sender, RoutedEventArgs e)

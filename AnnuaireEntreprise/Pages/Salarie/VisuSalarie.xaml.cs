@@ -142,62 +142,56 @@ namespace AnnuaireEntreprise.Pages.Salarie
         private void ModifyEmployee_Click(object sender, RoutedEventArgs e)
         {
             //Affichage d'une form avec la possibilité de modifier l'employée
-            //var sender_context = sender as System.Windows.Controls.Button;
-            //var context = sender_context!.DataContext as ReadEmployeeViewModels;
+            var sender_context = sender as Button;
+            Employee employee = sender_context!.DataContext as Employee;
 
-            //var win = new ModifySalarie(_context, context!.Id, context.FirstName, context.LastName, context.Phone, context.MobilePhone, context.Mail, context.ServicesId, context.ServicesName, context.SitesId, context.SitesCity);
-            //var result = win.ShowDialog();
-            //if (result == true)
-            //{
-            //    FillDataGrid();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Modification annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
-
+            var win = new ModifySalarie(employee, _employeeRepository, _serviceRepository, _siteRepository);
+            var result = win.ShowDialog();
+            if (result == true)
+            {
+                FillDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Modification annulée", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         //Suppression d'un employée
         private void DeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
-            //Demander la confirmation de suppression
-            //var sender_context = sender as Button;
+            try
+            {
+                //Demander la confirmation de suppression
+                var sender_context = sender as Button;
+                Employee employee = sender_context!.DataContext as Employee;
 
-            //var context = sender_context!.DataContext as ReadEmployeeViewModels;
+                var resultMsgBoxDelete = MessageBox.Show("Êtes-vous sûr de vouloir supprimer l'employée : '" + employee.FirstName + " " + employee.LastName + "' ?", "Confirmer la suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (resultMsgBoxDelete == MessageBoxResult.Yes)
+                {
+                    _employeeRepository.DeleteOneEmployee(employee.Id);
+                    FillDataGrid();
 
-            //var resultMsgBoxDelete = MessageBox.Show("Êtes-vous sûr de vouloir supprimer l'employée : '" + context!.FirstAndLastName + "' ?", "Confirmer la suppression", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            //if (resultMsgBoxDelete == MessageBoxResult.Yes)
-            //{
-            //    var employeeSelected = _context.Employees.Single(e => e.Id == context.Id);
-            //    if (employeeSelected != null)
-            //    {
-            //        _context.Remove(employeeSelected);
-            //        _context.SaveChanges();
-
-            //        FillDataGrid();
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Impossible de supprimer l'employée, il n'est pas présent dans la base de données", "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    }
-            //}
-
+                }
+            }
+            catch (Exception ex) { 
+                MessageBox.Show("Une erreur s'est produite lors de la suppression de l'employée : \n\r" + ex.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         //Permet d'afficher l'interface d'ajout d'un employé
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            //var win = new AddSalarie(_context);
-            //var result = win.ShowDialog();
-            //if (result == true)
-            //{
-            //    FillDataGrid();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Annulation de l'ajout", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
+            var win = new AddSalarie(_employeeRepository, _serviceRepository, _siteRepository);
+            var result = win.ShowDialog();
+            if (result == true)
+            {
+                FillDataGrid();
+            }
+            else
+            {
+                MessageBox.Show("Annulation de l'ajout", "Annulation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

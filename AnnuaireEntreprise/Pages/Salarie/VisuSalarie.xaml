@@ -45,8 +45,8 @@
                 <DataGridTextColumn Width="1.3*" Header="Téléphone fixe" Binding="{Binding Path=Phone}"></DataGridTextColumn>
                 <DataGridTextColumn Width="1.4*" Header="Téléphone portable" Binding="{Binding Path=MobilePhone}"></DataGridTextColumn>
                 <DataGridTextColumn Width="2*" Header="Adresse mail" Binding="{Binding Path=Mail}"></DataGridTextColumn>
-                <DataGridTextColumn Width="1.5*" Header="Services" Binding="{Binding Path=ServicesName}"></DataGridTextColumn>
-                <DataGridTextColumn Width="1*" Header="Lieu" Binding="{Binding Path=SitesCity}"></DataGridTextColumn>
+                <DataGridTextColumn Width="1.5*" Header="Service" Binding="{Binding Path=Service.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Width="1*" Header="Lieu" Binding="{Binding Path=Site.City}"></DataGridTextColumn>
                 <DataGridTemplateColumn x:Name="DataGridColumnModifier" Header="Modifier"  Width="1*" Visibility="Hidden">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -33,7 +33,7 @@ namespace AnnuaireEntreprise.Core.Application.Repositories
 
         public Site GetOneSiteById(int idSite)
         {
-            throw new NotImplementedException();
+            return _siteDataLayer.GetOneSiteById(idSite);
         }
         #endregion
 

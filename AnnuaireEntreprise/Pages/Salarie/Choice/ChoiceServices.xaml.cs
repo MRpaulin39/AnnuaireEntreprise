@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AnnuaireEntreprise.Core.Application.Repositories;
+using AnnuaireEntreprise.Core.Interfaces.Repositories;
+using AnnuaireEntreprise.Core.Models;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,27 +17,28 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
         public string NameServices { get; set; }
         public string FiltreText { get; set; }
 
-        public ChoiceServices()
+        private readonly IServiceRepository _serviceRepository;
+
+        public ChoiceServices(IServiceRepository serviceRepository)
         {
-            //_context = context;
             InitializeComponent();
+            _serviceRepository = serviceRepository;
 
             FiltreText = "";
 
             FillDataGrid();
-
         }
 
         //Validation du service sélectionné
         private void SelectService_Click(object sender, RoutedEventArgs e)
         {
-            //var sender_context = sender as Button;
-            //var context = sender_context!.DataContext as Services;
+            var sender_context = sender as Button;
+            Core.Models.Service context = sender_context!.DataContext as Core.Models.Service;
 
-            //IdServices = context!.Id;
-            //NameServices = context.Name;
+            IdServices = context.Id;
+            NameServices = context.Name;
 
-            //DialogResult = true;
+            DialogResult = true;
         }
 
         //Fonction de filtre
@@ -49,9 +53,7 @@ namespace AnnuaireEntreprise.Pages.Salarie.Choice
         {
             try
             {
-                //dataGridServices.ItemsSource = _context.Services
-                //    .Where(s => s.Name.Contains(FiltreText))
-                //    .ToList();
+                dataGridServices.ItemsSource = _serviceRepository.GetAllServices();
             }
             catch (Exception ex)
             {

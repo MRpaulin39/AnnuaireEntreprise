@@ -24,6 +24,11 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
         #region Create (Ajout)
         public void AddOneEmployee(Employee employee)
         {
+            _context.ChangeTracker.Clear();
+
+            _context.Entry(employee.Service).State = EntityState.Unchanged;
+            _context.Entry(employee.Site).State = EntityState.Unchanged;
+
             _context.Employees.Add(employee);
             _context.SaveChanges();
         }
@@ -34,6 +39,8 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
         {
             return _context.Employees
                 .Take(_nombreResultatParPage).Skip((page - 1) * _nombreResultatParPage)
+                .Include(item => item.Service)
+                .Include(item => item.Site)
                 .ToList();
         }
 
@@ -46,9 +53,12 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
         #region Update (Modification)
         public void UpdateOneEmployee(Employee employee)
         {
-            _context.Entry(employee).State = EntityState.Modified;
+            _context.ChangeTracker.Clear();
+
             _context.Entry(employee.Service).State = EntityState.Unchanged;
             _context.Entry(employee.Site).State = EntityState.Unchanged;
+
+            _context.Entry(employee).State = EntityState.Modified;            
             _context.SaveChanges();
         }
         #endregion

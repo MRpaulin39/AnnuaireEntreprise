@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnuaireEntreprise.Core.Inf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnuaireEntreprise.Core.Interfaces", "AnnuaireEntreprise.Core.Interfaces\AnnuaireEntreprise.Core.Interfaces.csproj", "{B3DC84DC-2A8D-4A24-8472-27E6F1D44B64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnuaireEntreprise.Core.Application", "AnnuaireEntreprise.Core.Application\AnnuaireEntreprise.Core.Application.csproj", "{4D4D26F0-63F4-4AF9-847B-35177492A92C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnnuaireEntreprise.Core.Application", "AnnuaireEntreprise.Core.Application\AnnuaireEntreprise.Core.Application.csproj", "{4D4D26F0-63F4-4AF9-847B-35177492A92C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnuaireEntreprise.Core.CustomException", "AnnuaireEntreprise.Core.CustomException\AnnuaireEntreprise.Core.CustomException.csproj", "{1BF0FFC1-8887-4724-A14C-876B54DC55BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{4D4D26F0-63F4-4AF9-847B-35177492A92C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D4D26F0-63F4-4AF9-847B-35177492A92C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D4D26F0-63F4-4AF9-847B-35177492A92C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BF0FFC1-8887-4724-A14C-876B54DC55BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BF0FFC1-8887-4724-A14C-876B54DC55BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BF0FFC1-8887-4724-A14C-876B54DC55BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BF0FFC1-8887-4724-A14C-876B54DC55BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
