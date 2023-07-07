@@ -16,9 +16,9 @@ namespace AnnuaireEntreprise.Pages.Salarie
     /// </summary>
     public partial class VisuSalarie : Page
     {
-        private string FiltreText = "";
-        private string FiltreServices = "";
-        private string FiltreSites = "";
+        private string FiltreText = string.Empty;
+        private string FiltreServices = string.Empty;
+        private string FiltreSites = string.Empty;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IServiceRepository _serviceRepository;
         private readonly ISiteRepository _siteRepository;
@@ -63,9 +63,15 @@ namespace AnnuaireEntreprise.Pages.Salarie
         {
             try
             {
-                List<Employee> ListEmployeeBDD = _employeeRepository.GetAllEmployees();
+                if (FiltreText != string.Empty || FiltreServices != string.Empty || FiltreSites != string.Empty)
+                {
+                    dataGridEmployee.ItemsSource = _employeeRepository.GetAllEmployeesFiltered(FiltreText, FiltreServices, FiltreSites);
+                }
+                else
+                {
+                    dataGridEmployee.ItemsSource = _employeeRepository.GetAllEmployees();
+                }
                 
-                dataGridEmployee.ItemsSource = ListEmployeeBDD;
             }
             catch (Exception ex)
             {

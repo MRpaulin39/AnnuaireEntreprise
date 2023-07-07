@@ -26,6 +26,15 @@ namespace AnnuaireEntreprise.Core.Interfaces.Repositories
         /// <param name="page">Numéro de page, par défaut page 1</param>
         /// <returns>Retourne une liste des employées</returns>
         public List<Employee> GetAllEmployees(int page = 1);
+
+        /// <summary>
+        /// Permet de récupérer la liste des salariés filtrés en fonction des champs remplis
+        /// </summary>
+        /// <param name="name">Nom de l'employée</param>
+        /// <param name="service">Service de l'employée</param>
+        /// <param name="site">Lieu de travail de l'employée</param>
+        /// <returns>la liste des employées correspondant au filtre</returns>
+        public List<Employee> GetAllEmployeesFiltered(string name, string service, string site);
         #endregion
 
         #region Update (Modification)

@@ -45,6 +45,11 @@ namespace AnnuaireEntreprise.Core.Application.Repositories
         {
             return _employeeDataLayer.GetOneEmployeeById(idEmployee);
         }
+
+        public List<Employee> GetAllEmployeesFiltered(string name, string service, string site)
+        {
+            return _employeeDataLayer.GetAllEmployeesFiltered(name, service, site);
+        }
         #endregion
 
         #region Update (Mise à jour)
@@ -90,6 +95,8 @@ namespace AnnuaireEntreprise.Core.Application.Repositories
                 if (employee.Id <= 0) { throw new EmployeeRepositoryException("L'Id du salarié n'est pas défini"); }
             }
         }
+
+        
         #endregion
 
     }

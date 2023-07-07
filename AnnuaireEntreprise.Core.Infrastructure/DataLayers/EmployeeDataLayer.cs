@@ -48,6 +48,15 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
         {
             return _context.Employees.Where(item => item.Id == idEmployee).Single();
         }
+
+        public List<Employee> GetAllEmployeesFiltered(string name, string service, string site)
+        {
+            return _context.Employees
+                .Where(item => item.FirstName.Contains(name))
+                .Where(item => item.Service.Name.Contains(service))
+                .Where(item => item.Site.City.Contains(site))
+                .ToList();
+        }
         #endregion
 
         #region Update (Modification)
@@ -71,7 +80,7 @@ namespace AnnuaireEntreprise.Core.Infrastructure.DataLayers
 
             _context.Remove(employee);
             _context.SaveChanges();
-        }
+        }        
         #endregion
 
         #endregion
